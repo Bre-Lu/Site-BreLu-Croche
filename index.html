@@ -224,7 +224,10 @@
     display:flex; flex-direction:column; align-items:center;
     position:sticky; top:100px;
   }
-  .preview-panel svg{width:100%; max-width:280px; height:auto; transition:filter 0.2s ease;}
+  #preview-container{
+    width:100%; max-width:280px; height:auto;
+  }
+  #preview-container svg{width:100%; height:auto;}
   .preview-caption{
     margin-top:18px; text-align:center;
   }
@@ -268,18 +271,21 @@
   .model-pick[aria-pressed="true"] span{color:var(--white); font-weight:700;}
 
   .color-picker{
-    display:flex; flex-wrap:wrap; gap:14px;
+    display:flex; flex-wrap:wrap; gap:16px; justify-content:flex-start;
+    padding:8px 0;
   }
   .color-pick{
-    display:flex; flex-direction:column; align-items:center; gap:6px;
-    background:transparent; border:none; cursor:pointer; color:#D9CDBE; font-size:11.5px;
-    width:64px;
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+    background:transparent; border:none; cursor:pointer; color:#D9CDBE; font-size:12px;
+    width:72px; padding:8px;
+    transition:transform 0.15s ease;
   }
   .yarn-ball{
-    width:46px; height:46px; border-radius:50%;
+    width:52px; height:52px; border-radius:50%;
     position:relative;
     border:3px solid rgba(255,255,255,0.15);
     transition:border-color 0.15s ease, transform 0.15s ease;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
   }
   .yarn-ball::before{
     content:"";
@@ -287,8 +293,9 @@
     background-image:
       repeating-conic-gradient(from 0deg, rgba(255,255,255,0.16) 0deg 4deg, transparent 4deg 12deg);
   }
-  .color-pick[aria-pressed="true"] .yarn-ball{border-color:var(--mustard); transform:scale(1.08);}
+  .color-pick[aria-pressed="true"] .yarn-ball{border-color:var(--mustard); transform:scale(1.12); box-shadow: 0 4px 14px rgba(206,155,61,0.4);}
   .color-pick:hover .yarn-ball{border-color:rgba(255,255,255,0.4);}
+  .color-pick span{display:block; font-size:12px; margin-top:4px; color:#D9CDBE; text-align:center; word-break:break-word;}
 
   .configurator-actions{
     margin-top:8px;
@@ -440,14 +447,7 @@
       <div class="configurator-grid">
         <!-- LIVE PREVIEW -->
         <div class="preview-panel">
-          <svg id="preview-svg" viewBox="0 0 200 220" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-            <defs><clipPath id="preview-clip"><path id="preview-path" d=""/></clipPath></defs>
-            <g clip-path="url(#preview-clip)">
-              <rect id="preview-fill" width="200" height="220" fill="#B25C41"/>
-              <rect width="200" height="220" fill="url(#stitch)" style="mix-blend-mode:overlay" opacity="0.9"/>
-            </g>
-            <g id="preview-handles"></g>
-          </svg>
+          <div id="preview-container" style="display:flex; align-items:center; justify-content:center;"></div>
           <div class="preview-caption">
             <div class="model-name" id="preview-model-name">Tote Clássica</div>
             <div class="color-name" id="preview-color-name">Terracota + Marfim</div>
@@ -597,7 +597,65 @@
     return v.toLocaleString('pt-BR', {style:'currency', currency:'BRL'});
   }
 
-  function bagSvg(model, size){
+  function bagPreviewSvg(color1, color2){
+    return `<svg viewBox="0 0 240 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <defs>
+        <pattern id="bicolor-weave" width="10" height="10" patternUnits="userSpaceOnUse">
+          <circle cx="2.5" cy="2.5" r="2" fill="${color1}"/>
+          <circle cx="7.5" cy="2.5" r="2" fill="${color2}"/>
+          <circle cx="2.5" cy="7.5" r="2" fill="${color2}"/>
+          <circle cx="7.5" cy="7.5" r="2" fill="${color1}"/>
+        </pattern>
+        <pattern id="bicolor-stripes" width="8" height="200" patternUnits="userSpaceOnUse">
+          <rect x="0" y="0" width="4" height="200" fill="${color1}"/>
+          <rect x="4" y="0" width="4" height="200" fill="${color2}"/>
+        </pattern>
+      </defs>
+      
+      <!-- Sombra embaixo -->
+      <ellipse cx="120" cy="270" rx="75" ry="14" fill="rgba(0,0,0,0.12)"/>
+      
+      <!-- Alça esquerda - bicolor -->
+      <path d="M 70 130 Q 50 90 50 40 Q 50 25 65 20 Q 80 15 85 30 Q 100 80 90 130" 
+            fill="none" stroke="${color1}" stroke-width="14" stroke-linecap="round" opacity="0.9"/>
+      <path d="M 77 130 Q 57 90 57 40 Q 57 28 70 24 Q 82 20 85 32 Q 98 80 88 130" 
+            fill="none" stroke="${color2}" stroke-width="7" stroke-linecap="round" opacity="0.9"/>
+      
+      <!-- Alça direita - bicolor -->
+      <path d="M 170 130 Q 190 90 190 40 Q 190 25 175 20 Q 160 15 155 30 Q 140 80 150 130" 
+            fill="none" stroke="${color1}" stroke-width="14" stroke-linecap="round" opacity="0.9"/>
+      <path d="M 163 130 Q 183 90 183 40 Q 183 28 170 24 Q 158 20 155 32 Q 142 80 152 130" 
+            fill="none" stroke="${color2}" stroke-width="7" stroke-linecap="round" opacity="0.9"/>
+      
+      <!-- Corpo superior (mais estruturado) -->
+      <path d="M 60 130 L 65 100 Q 70 90 85 85 L 155 85 Q 170 90 175 100 L 180 130 Z" 
+            fill="url(#bicolor-weave)" stroke="rgba(0,0,0,0.1)" stroke-width="0.5"/>
+      
+      <!-- Corpo principal (padrão crochê bicolor) -->
+      <path d="M 55 130 Q 50 145 50 165 L 50 210 Q 50 235 70 245 L 170 245 Q 190 235 190 210 L 190 165 Q 190 145 185 130 Z" 
+            fill="url(#bicolor-stripes)" stroke="rgba(0,0,0,0.08)" stroke-width="0.5"/>
+      
+      <!-- Brilho/reflexo na bolsa -->
+      <ellipse cx="80" cy="170" rx="30" ry="50" fill="white" opacity="0.08"/>
+      
+      <!-- Borda superior da bolsa -->
+      <ellipse cx="120" cy="130" rx="65" ry="8" fill="rgba(0,0,0,0.05)"/>
+      
+      <!-- Detalhes de textura (pontinhos tipo crochê) -->
+      <g opacity="0.15">
+        <circle cx="90" cy="160" r="1.5" fill="rgba(0,0,0,0.4)"/>
+        <circle cx="110" cy="155" r="1.5" fill="rgba(0,0,0,0.4)"/>
+        <circle cx="130" cy="165" r="1.5" fill="rgba(0,0,0,0.4)"/>
+        <circle cx="150" cy="158" r="1.5" fill="rgba(0,0,0,0.4)"/>
+        <circle cx="100" cy="185" r="1.5" fill="rgba(0,0,0,0.4)"/>
+        <circle cx="140" cy="190" r="1.5" fill="rgba(0,0,0,0.4)"/>
+      </g>
+      
+      <!-- Logo/tag -->
+      <rect x="105" y="220" width="30" height="10" rx="2" fill="#3B2A20" opacity="0.25"/>
+      <text x="120" y="227" text-anchor="middle" font-family="serif" font-size="6" fill="rgba(59,42,32,0.4)" font-weight="bold">BreLu</text>
+    </svg>`;
+  }
     return `<svg viewBox="0 0 200 220" width="${size}" height="${size}" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
       <defs><clipPath id="clip-${model.id}"><path d="${model.path}"/></clipPath></defs>
       <g clip-path="url(#clip-${model.id})">
@@ -705,67 +763,10 @@
     const color1 = colors.find(c => c.id === state.color1);
     const color2 = colors.find(c => c.id === state.color2);
 
-    // Se é modelo #1, mostrar imagem real; senão, mostrar SVG com cores
-    const previewSvg = document.getElementById('preview-svg');
-    const previewContainer = document.querySelector('.preview-panel svg');
+    const previewContainer = document.getElementById('preview-container');
+    const previewHtml = bagPreviewSvg(color1.hex, color2.hex);
     
-    if(model.id === 'tote'){
-      // Mostrar imagem real
-      if(previewContainer && previewContainer.tagName.toLowerCase() === 'svg'){
-        previewContainer.style.display = 'none';
-      }
-      if(!document.getElementById('preview-img')){
-        const img = document.createElement('img');
-        img.id = 'preview-img';
-        img.src = 'bolsa_modelo1.jpg';
-        img.style.cssText = 'width:100%; max-width:280px; height:auto;';
-        previewContainer.parentNode.insertBefore(img, previewContainer);
-      }
-    } else {
-      // Mostrar SVG com cores
-      if(document.getElementById('preview-img')){
-        document.getElementById('preview-img').style.display = 'none';
-      }
-      previewContainer.style.display = 'block';
-      
-      document.getElementById('preview-path').setAttribute('d', model.path);
-      
-      // Remover pattern antigo se existir
-      const oldPattern = document.getElementById('bicolor-pattern');
-      if(oldPattern) oldPattern.remove();
-      
-      // Criar novo pattern bicolor
-      const svg = document.querySelector('#preview-svg defs');
-      const pattern = document.createElementNS('http://www.w3.org/2000/svg', 'pattern');
-      pattern.id = 'bicolor-pattern';
-      pattern.setAttribute('x', '0');
-      pattern.setAttribute('y', '0');
-      pattern.setAttribute('width', '6');
-      pattern.setAttribute('height', '220');
-      pattern.setAttribute('patternUnits', 'userSpaceOnUse');
-      
-      const rect1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-      rect1.setAttribute('x', '0');
-      rect1.setAttribute('y', '0');
-      rect1.setAttribute('width', '3');
-      rect1.setAttribute('height', '220');
-      rect1.setAttribute('fill', color1.hex);
-      
-      const rect2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
-      rect2.setAttribute('x', '3');
-      rect2.setAttribute('y', '0');
-      rect2.setAttribute('width', '3');
-      rect2.setAttribute('height', '220');
-      rect2.setAttribute('fill', color2.hex);
-      
-      pattern.appendChild(rect1);
-      pattern.appendChild(rect2);
-      svg.appendChild(pattern);
-      
-      // Aplicar o pattern
-      document.getElementById('preview-fill').setAttribute('fill', 'url(#bicolor-pattern)');
-      document.getElementById('preview-handles').innerHTML = model.handles;
-    }
+    previewContainer.innerHTML = previewHtml;
     
     document.getElementById('preview-model-name').textContent = model.name;
     document.getElementById('preview-color-name').textContent = `${color1.name} + ${color2.name}`;

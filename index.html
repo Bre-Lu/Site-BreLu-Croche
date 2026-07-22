@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ponto & Fio — Bolsas de crochê feitas à mão</title>
+<title>BreLu — Bolsas de crochê feitas à mão</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,500&family=Karla:wght@400;500;700&display=swap" rel="stylesheet">
@@ -378,7 +378,7 @@
 <!-- ========= HEADER ========= -->
 <header class="site">
   <div class="wrap nav">
-    <div class="logo">Ponto <span class="dot">&amp;</span> Fio</div>
+    <div class="logo">BreLu</div>
     <nav class="nav-links">
       <a href="#catalogo">Catálogo</a>
       <a href="#montar">Monte sua bolsa</a>
@@ -393,8 +393,8 @@
   <div class="wrap hero-grid">
     <div>
       <div class="eyebrow">Feito à mão, fio por fio</div>
-      <h1>Cada bolsa começa<br>em <em>um novelo</em>.</h1>
-      <p class="lead">Bolsas de crochê artesanais, sob encomenda. Escolha o modelo, escolha a cor do fio, e nós tecemos a sua — ponto a ponto.</p>
+      <h1>Cada bolsa é<br>única e <em>especial</em>.</h1>
+      <p class="lead">Bolsas de crochê artesanais, sob encomenda. Escolha o modelo, escolha as cores que mais combinam com você, e nós tecemos a sua.</p>
       <div class="hero-actions">
         <a class="btn btn-primary" href="#montar">Monte a sua bolsa</a>
         <a class="btn btn-ghost" href="#catalogo">Ver catálogo</a>
@@ -434,8 +434,8 @@
   <div class="wrap">
     <div class="configurator">
       <div class="kicker">Monte sua bolsa</div>
-      <h2>Escolha o modelo. Escolha o fio.<br>Veja antes de encomendar.</h2>
-      <p class="lead">A pré-visualização muda de cor conforme você escolhe o novelo — assim você já sabe exatamente como sua bolsa vai ficar.</p>
+      <h2>Escolha o modelo. Escolha as cores.<br>Veja antes de encomendar.</h2>
+      <p class="lead">Escolha uma combinação bicolor que combine com você. A pré-visualização muda em tempo real — assim você já sabe exatamente como sua bolsa vai ficar.</p>
 
       <div class="configurator-grid">
         <!-- LIVE PREVIEW -->
@@ -450,7 +450,7 @@
           </svg>
           <div class="preview-caption">
             <div class="model-name" id="preview-model-name">Tote Clássica</div>
-            <div class="color-name" id="preview-color-name">Terracota</div>
+            <div class="color-name" id="preview-color-name">Terracota + Marfim</div>
           </div>
           <div class="preview-price" id="preview-price">R$ 189,00</div>
         </div>
@@ -463,8 +463,15 @@
           </div>
 
           <div class="config-step">
-            <div class="step-label"><span class="step-num">2</span> Escolha a cor do fio</div>
-            <div class="color-picker" id="color-picker" role="group" aria-label="Escolha a cor do fio"></div>
+            <div class="step-label"><span class="step-num">2</span> Escolha as cores</div>
+            <div style="margin-bottom: 22px;">
+              <div style="font-size: 13px; color: #C9BBAA; margin-bottom: 10px; font-weight: 600;">Cor 1 (predominante)</div>
+              <div class="color-picker" id="color-picker-1" role="group" aria-label="Escolha a primeira cor"></div>
+            </div>
+            <div>
+              <div style="font-size: 13px; color: #C9BBAA; margin-bottom: 10px; font-weight: 600;">Cor 2 (detalhes)</div>
+              <div class="color-picker" id="color-picker-2" role="group" aria-label="Escolha a segunda cor"></div>
+            </div>
           </div>
 
           <div class="configurator-actions">
@@ -508,8 +515,8 @@
   <div class="wrap">
     <div class="footer-grid">
       <div>
-        <h4>Ponto & Fio</h4>
-        <p>Bolsas de crochê feitas à mão, uma de cada vez. Escolha o modelo, escolha o fio, e deixe a gente tecer a sua.</p>
+        <h4>BreLu</h4>
+        <p>Bolsas de crochê feitas à mão, uma de cada vez. Escolha o modelo, escolha as cores, e deixe a gente tecer a sua.</p>
       </div>
       <div>
         <h4>Contato</h4>
@@ -523,7 +530,7 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 Ponto & Fio. Feito à mão, com carinho.</span>
+      <span>© 2026 BreLu. Feito à mão, com carinho.</span>
       <span>Pagamentos processados via Asaas</span>
     </div>
   </div>
@@ -535,8 +542,6 @@
 
 <script>
 (function(){
-  const YARN = "#B25C41"; // default color hex, updated live
-
   const models = [
     {
       id: "tote",
@@ -608,8 +613,17 @@
   models.forEach(m => {
     const card = document.createElement('div');
     card.className = 'product-card';
+    
+    // Se é o modelo 1 (Tote), usar imagem real, senão usar SVG
+    let thumbHTML = '';
+    if(m.id === 'tote'){
+      thumbHTML = '<img src="bolsa_modelo1.jpg" style="width:100%; height:100%; object-fit:contain; border-radius:14px;" alt="' + m.name + '">';
+    } else {
+      thumbHTML = bagSvg(m, 130);
+    }
+    
     card.innerHTML = `
-      <div class="product-thumb">${bagSvg(m, 130)}</div>
+      <div class="product-thumb">${thumbHTML}</div>
       <h3>${m.name}</h3>
       <div class="product-price">${money(m.price)}</div>
       <div class="product-desc">${m.desc}</div>
@@ -630,57 +644,142 @@
     btn.type = 'button';
     btn.setAttribute('aria-pressed', 'false');
     btn.dataset.model = m.id;
-    btn.innerHTML = `${bagSvg(m, 44)}<span>${m.name}</span>`;
+    
+    let svgContent = '';
+    if(m.id === 'tote'){
+      svgContent = '<img src="bolsa_modelo1.jpg" style="width:50px; height:50px; object-fit:contain;" alt="' + m.name + '">';
+    } else {
+      svgContent = bagSvg(m, 44);
+    }
+    
+    btn.innerHTML = `${svgContent}<span>${m.name}</span>`;
     btn.addEventListener('click', () => selectModel(m.id));
     modelPicker.appendChild(btn);
   });
 
-  // ---- render color picker ----
-  const colorPicker = document.getElementById('color-picker');
+  // ---- render color pickers (Cor 1 e Cor 2) ----
+  const colorPicker1 = document.getElementById('color-picker-1');
+  const colorPicker2 = document.getElementById('color-picker-2');
+  
   colors.forEach(c => {
-    const btn = document.createElement('button');
-    btn.className = 'color-pick';
-    btn.type = 'button';
-    btn.setAttribute('aria-pressed', 'false');
-    btn.dataset.color = c.id;
-    btn.innerHTML = `<span class="yarn-ball" style="background:${c.hex}"></span>${c.name}`;
-    btn.addEventListener('click', () => selectColor(c.id));
-    colorPicker.appendChild(btn);
+    const btn1 = document.createElement('button');
+    btn1.className = 'color-pick';
+    btn1.type = 'button';
+    btn1.setAttribute('aria-pressed', 'false');
+    btn1.dataset.color = c.id;
+    btn1.innerHTML = `<span class="yarn-ball" style="background:${c.hex}"></span>${c.name}`;
+    btn1.addEventListener('click', () => selectColor1(c.id));
+    colorPicker1.appendChild(btn1);
+    
+    const btn2 = document.createElement('button');
+    btn2.className = 'color-pick';
+    btn2.type = 'button';
+    btn2.setAttribute('aria-pressed', 'false');
+    btn2.dataset.color = c.id;
+    btn2.innerHTML = `<span class="yarn-ball" style="background:${c.hex}"></span>${c.name}`;
+    btn2.addEventListener('click', () => selectColor2(c.id));
+    colorPicker2.appendChild(btn2);
   });
 
   // ---- state ----
-  let state = { model: models[0].id, color: colors[0].id };
+  let state = { model: models[0].id, color1: colors[0].id, color2: colors[4].id };
 
   function selectModel(id){
     state.model = id;
     document.querySelectorAll('.model-pick').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.model === id)));
     render();
   }
-  function selectColor(id){
-    state.color = id;
-    document.querySelectorAll('.color-pick').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.color === id)));
+  function selectColor1(id){
+    state.color1 = id;
+    document.querySelectorAll('#color-picker-1 .color-pick').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.color === id)));
+    render();
+  }
+  function selectColor2(id){
+    state.color2 = id;
+    document.querySelectorAll('#color-picker-2 .color-pick').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.color === id)));
     render();
   }
 
   function render(){
     const model = models.find(m => m.id === state.model);
-    const color = colors.find(c => c.id === state.color);
+    const color1 = colors.find(c => c.id === state.color1);
+    const color2 = colors.find(c => c.id === state.color2);
 
-    document.getElementById('preview-path').setAttribute('d', model.path);
-    document.getElementById('preview-fill').setAttribute('fill', color.hex);
-    document.getElementById('preview-handles').innerHTML = model.handles;
+    // Se é modelo #1, mostrar imagem real; senão, mostrar SVG com cores
+    const previewSvg = document.getElementById('preview-svg');
+    const previewContainer = document.querySelector('.preview-panel svg');
+    
+    if(model.id === 'tote'){
+      // Mostrar imagem real
+      if(previewContainer && previewContainer.tagName.toLowerCase() === 'svg'){
+        previewContainer.style.display = 'none';
+      }
+      if(!document.getElementById('preview-img')){
+        const img = document.createElement('img');
+        img.id = 'preview-img';
+        img.src = 'bolsa_modelo1.jpg';
+        img.style.cssText = 'width:100%; max-width:280px; height:auto;';
+        previewContainer.parentNode.insertBefore(img, previewContainer);
+      }
+    } else {
+      // Mostrar SVG com cores
+      if(document.getElementById('preview-img')){
+        document.getElementById('preview-img').style.display = 'none';
+      }
+      previewContainer.style.display = 'block';
+      
+      document.getElementById('preview-path').setAttribute('d', model.path);
+      
+      // Remover pattern antigo se existir
+      const oldPattern = document.getElementById('bicolor-pattern');
+      if(oldPattern) oldPattern.remove();
+      
+      // Criar novo pattern bicolor
+      const svg = document.querySelector('#preview-svg defs');
+      const pattern = document.createElementNS('http://www.w3.org/2000/svg', 'pattern');
+      pattern.id = 'bicolor-pattern';
+      pattern.setAttribute('x', '0');
+      pattern.setAttribute('y', '0');
+      pattern.setAttribute('width', '6');
+      pattern.setAttribute('height', '220');
+      pattern.setAttribute('patternUnits', 'userSpaceOnUse');
+      
+      const rect1 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rect1.setAttribute('x', '0');
+      rect1.setAttribute('y', '0');
+      rect1.setAttribute('width', '3');
+      rect1.setAttribute('height', '220');
+      rect1.setAttribute('fill', color1.hex);
+      
+      const rect2 = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+      rect2.setAttribute('x', '3');
+      rect2.setAttribute('y', '0');
+      rect2.setAttribute('width', '3');
+      rect2.setAttribute('height', '220');
+      rect2.setAttribute('fill', color2.hex);
+      
+      pattern.appendChild(rect1);
+      pattern.appendChild(rect2);
+      svg.appendChild(pattern);
+      
+      // Aplicar o pattern
+      document.getElementById('preview-fill').setAttribute('fill', 'url(#bicolor-pattern)');
+      document.getElementById('preview-handles').innerHTML = model.handles;
+    }
+    
     document.getElementById('preview-model-name').textContent = model.name;
-    document.getElementById('preview-color-name').textContent = color.name;
+    document.getElementById('preview-color-name').textContent = `${color1.name} + ${color2.name}`;
     document.getElementById('preview-price').textContent = money(model.price);
 
-    const msg = encodeURIComponent(`Olá! Quero encomendar a bolsa ${model.name}, na cor ${color.name} — ${money(model.price)}.`);
+    const msg = encodeURIComponent(`Olá! Quero encomendar a bolsa ${model.name}, nas cores ${color1.name} e ${color2.name} — ${money(model.price)}.`);
     document.getElementById('whatsapp-btn').href = `https://wa.me/${WHATSAPP_NUMBER}?text=${msg}`;
     document.getElementById('asaas-btn').href = ASAAS_LINK;
   }
 
   // init
   selectModel(models[0].id);
-  selectColor(colors[0].id);
+  selectColor1(colors[0].id);
+  selectColor2(colors[4].id);
   render();
 })();
 </script>

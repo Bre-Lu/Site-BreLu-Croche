@@ -3,437 +3,760 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>BreLu - Bolsas de Crochê Feitas à Mão</title>
+  <title>BreLu — Bolsas de Crochê Artesanais</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:wght@400;500;600&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
   <style>
+    :root {
+      --bg: #ede6dc;
+      --card: #f7f3ea;
+      --ink: #3b2a20;
+      --ink-soft: #6b5644;
+      --line: #d8cdbb;
+      --accent: #c4707a;
+      --gold: #b8956a;
+      --ivory: #e8dfc8;
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
     
     body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: #f5f1ed;
-      color: #3b2a20;
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--ink);
       line-height: 1.6;
+      font-size: 15px;
     }
+
+    h1, h2, h3, h4 { font-family: 'Lora', serif; font-weight: 600; }
     
-    .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
-    
+    .container { max-width: 1120px; margin: 0 auto; padding: 0 24px; }
+
     /* HEADER */
     header {
-      background: white;
-      padding: 20px 0;
-      border-bottom: 1px solid #e0dbd0;
-      margin-bottom: 40px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(237, 230, 220, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--line);
     }
-    
-    .header-content {
+
+    .nav-wrapper {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+    }
+
+    .logo {
+      height: 40px;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo img {
+      height: 100%;
+      width: auto;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 40px;
+      font-size: 14px;
+      flex: 1;
+      margin-left: 60px;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--ink-soft);
+      transition: color 0.3s;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 2px;
+    }
+
+    .nav-links a:hover {
+      color: var(--ink);
+      border-color: var(--accent);
+    }
+
+    .cart-icon {
+      position: relative;
+      cursor: pointer;
+      font-size: 20px;
+      color: var(--ink);
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.3s;
+    }
+
+    .cart-icon:hover { color: var(--accent); }
+
+    .cart-count {
+      position: absolute;
+      top: -8px;
+      right: -8px;
+      background: var(--accent);
+      color: white;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+    }
+
+    .cart-modal {
+      display: none;
+      position: fixed;
+      top: 60px;
+      right: 24px;
+      width: 380px;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 16px 40px rgba(59, 42, 32, 0.2);
+      z-index: 1000;
+      max-height: 600px;
+      overflow-y: auto;
+    }
+
+    .cart-modal.active { display: block; }
+
+    .cart-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--line);
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
-    
-    .logo {
-      font-size: 28px;
-      font-weight: bold;
-      color: #8b5a3c;
+
+    .cart-header h3 {
+      font-size: 16px;
+      color: var(--ink);
     }
-    
-    nav a {
-      margin-left: 30px;
-      text-decoration: none;
-      color: #2c2c2c;
-      font-weight: 500;
-      transition: color 0.3s;
+
+    .cart-close {
+      cursor: pointer;
+      font-size: 20px;
+      color: var(--ink-soft);
     }
-    
-    nav a:hover { color: #c47569; }
-    
+
+    .cart-items {
+      padding: 12px 0;
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .cart-item {
+      padding: 12px 20px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+    }
+
+    .cart-item-info {
+      flex: 1;
+    }
+
+    .cart-item-name {
+      font-weight: 600;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .cart-item-colors {
+      font-size: 11px;
+      color: var(--ink-soft);
+    }
+
+    .cart-item-price {
+      color: var(--accent);
+      font-weight: 600;
+      margin-left: 12px;
+    }
+
+    .cart-item-remove {
+      cursor: pointer;
+      color: #999;
+      margin-left: 8px;
+      font-size: 16px;
+    }
+
+    .cart-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--line);
+    }
+
+    .cart-total {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .cart-checkout {
+      width: 100%;
+      background: var(--accent);
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: background 0.3s;
+    }
+
+    .cart-checkout:hover { background: #b25c5d; }
+
+    .cart-empty {
+      padding: 40px 20px;
+      text-align: center;
+      color: var(--ink-soft);
+      font-size: 13px;
+    }
+
     /* HERO */
     .hero {
+      padding: 80px 0;
       text-align: center;
-      margin-bottom: 60px;
     }
-    
+
+    .eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 14px;
+    }
+
     .hero h1 {
-      font-size: 48px;
+      font-size: 52px;
+      line-height: 1.1;
       margin-bottom: 20px;
-      color: #3b2a20;
+      color: var(--ink);
     }
-    
+
     .hero p {
-      font-size: 18px;
-      color: #6b5644;
-      max-width: 600px;
-      margin: 0 auto 30px;
+      font-size: 16px;
+      color: var(--ink-soft);
+      max-width: 520px;
+      margin: 0 auto 32px;
     }
-    
-    /* CATÁLOGO */
+
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 28px;
+      border-radius: 4px;
+      font-weight: 600;
+      font-size: 14px;
+      text-decoration: none;
+      cursor: pointer;
+      border: 2px solid transparent;
+      transition: all 0.3s;
+    }
+
+    .btn-primary {
+      background: var(--ink);
+      color: white;
+    }
+
+    .btn-primary:hover { background: var(--accent); }
+
+    .btn-ghost {
+      background: transparent;
+      border-color: var(--ink);
+      color: var(--ink);
+    }
+
+    .btn-ghost:hover {
+      background: var(--ink);
+      color: white;
+    }
+
+    /* CATALOG */
+    .section {
+      padding: 60px 0;
+    }
+
+    .section-head {
+      margin-bottom: 48px;
+    }
+
+    .section-eyebrow {
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .section-head h2 {
+      font-size: 36px;
+      margin-bottom: 10px;
+      color: var(--ink);
+    }
+
     .catalog {
-      margin-bottom: 80px;
+      background: var(--card);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
     }
-    
-    .section-title {
-      font-size: 32px;
-      margin-bottom: 40px;
-      color: #3b2a20;
-      border-bottom: 3px solid #c47569;
-      padding-bottom: 15px;
-    }
-    
+
     .products-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      margin-bottom: 60px;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 28px;
     }
-    
+
     .product-card {
       background: white;
-      border-radius: 12px;
-      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 24px;
       text-align: center;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
       transition: transform 0.3s, box-shadow 0.3s;
     }
-    
+
     .product-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 24px rgba(59, 42, 32, 0.12);
     }
-    
+
     .product-image {
       width: 100%;
-      height: 200px;
-      background: #f0ebe0;
-      border-radius: 8px;
-      margin-bottom: 15px;
+      height: 160px;
+      background: var(--bg);
+      border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
+      margin-bottom: 18px;
+      overflow: hidden;
     }
-    
+
     .product-image img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
+      object-fit: cover;
     }
-    
+
     .product-name {
-      font-size: 20px;
-      font-weight: bold;
-      margin-bottom: 10px;
-      color: #3b2a20;
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      color: var(--ink);
     }
-    
+
     .product-desc {
-      font-size: 14px;
-      color: #6b5644;
-      margin-bottom: 15px;
-      min-height: 40px;
+      font-size: 13px;
+      color: var(--ink-soft);
+      margin-bottom: 12px;
     }
-    
+
     .product-price {
-      font-size: 24px;
-      color: #c47569;
-      font-weight: bold;
-      margin-bottom: 15px;
+      font-size: 18px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 16px;
     }
-    
-    .btn {
-      background: #3b2a20;
+
+    .product-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .btn-small {
+      flex: 1;
+      background: var(--ink);
       color: white;
-      padding: 12px 24px;
+      padding: 10px;
       border: none;
-      border-radius: 6px;
+      border-radius: 4px;
       cursor: pointer;
-      font-weight: bold;
+      font-size: 12px;
+      font-weight: 600;
       transition: background 0.3s;
     }
-    
-    .btn:hover { background: #c47569; }
-    
-    /* CONFIGURADOR */
-    .configurator {
-      background: #4a3a2a;
+
+    .btn-small:hover { background: var(--accent); }
+
+    .btn-small.secondary {
+      background: transparent;
+      border: 1px solid var(--ink);
+      color: var(--ink);
+    }
+
+    .btn-small.secondary:hover {
+      background: var(--ink);
       color: white;
-      padding: 60px;
-      border-radius: 16px;
-      margin-bottom: 60px;
-      box-shadow: 0 8px 24px rgba(0,0,0,0.15);
     }
-    
-    .configurator h2 {
-      font-size: 36px;
-      margin-bottom: 15px;
-    }
-    
-    .configurator p {
-      font-size: 16px;
-      margin-bottom: 40px;
-      color: #d9cfc0;
-      max-width: 600px;
-    }
-    
-    .config-content {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
-      align-items: start;
-    }
-    
-    .preview-box {
-      background: rgba(255,255,255,0.1);
-      border: 2px solid rgba(255,255,255,0.2);
-      border-radius: 12px;
-      padding: 40px;
-      text-align: center;
-    }
-    
-    .preview-box svg {
-      width: 100%;
-      max-width: 250px;
-      height: auto;
-      margin-bottom: 20px;
-    }
-    
-    .preview-info {
-      font-size: 14px;
-      color: #d9cfc0;
-      margin-bottom: 10px;
-    }
-    
-    .preview-model {
-      font-size: 22px;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    
-    .preview-price {
-      font-size: 28px;
-      color: #d4a574;
-      font-weight: bold;
-    }
-    
-    .controls {
-      display: flex;
-      flex-direction: column;
-      gap: 30px;
-    }
-    
-    .control-group {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-    
-    .control-label {
-      font-size: 14px;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      font-weight: bold;
-      color: #f4a460;
-    }
-    
-    .models-buttons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-    
-    .model-btn {
-      background: rgba(255,255,255,0.1);
-      color: white;
-      padding: 15px;
-      border: 2px solid rgba(255,255,255,0.2);
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-      transition: all 0.3s;
-    }
-    
-    .model-btn:hover {
-      border-color: rgba(255,255,255,0.4);
-      background: rgba(255,255,255,0.15);
-    }
-    
-    .model-btn.active {
-      border-color: #f4a460;
-      background: rgba(244,164,96,0.2);
-      color: #f4a460;
-    }
-    
-    .colors-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 15px;
-    }
-    
+
     /* INFO STRIP */
     .info-strip {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 40px;
-      padding: 60px 0;
-      margin: 60px 0;
-      border-top: 1px solid #ddd;
-      border-bottom: 1px solid #ddd;
+      padding: 56px 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
     }
-    
+
     .info-item {
       text-align: center;
     }
-    
+
     .info-number {
-      font-size: 24px;
-      color: #c47569;
-      font-weight: bold;
-      margin-bottom: 10px;
-    }
-    
-    .info-item h3 {
+      font-family: 'Lora', serif;
       font-size: 18px;
-      color: #3b2a20;
+      color: var(--accent);
+      font-weight: 600;
       margin-bottom: 10px;
     }
-    
+
+    .info-item h3 {
+      font-size: 15px;
+      margin-bottom: 8px;
+      color: var(--ink);
+    }
+
     .info-item p {
-      color: #6b5644;
-      font-size: 14px;
+      font-size: 13px;
+      color: var(--ink-soft);
       line-height: 1.6;
     }
-    
+
+    /* CONFIGURATOR */
+    .configurator {
+      background: var(--ink);
+      color: white;
+      padding: 56px;
+      border-radius: 8px;
+      margin: 60px 0;
+    }
+
+    .configurator h2 {
+      color: white;
+      font-size: 32px;
+      margin-bottom: 12px;
+    }
+
+    .configurator > p {
+      color: #d9cfc0;
+      max-width: 480px;
+      font-size: 14px;
+      margin-bottom: 40px;
+    }
+
+    .config-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 56px;
+      align-items: start;
+    }
+
+    .preview-panel {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      padding: 40px;
+      text-align: center;
+      position: sticky;
+      top: 100px;
+    }
+
+    .preview-visual {
+      width: 100%;
+      height: 200px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .preview-model {
+      font-family: 'Lora', serif;
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .preview-colors {
+      font-size: 12px;
+      color: #c9bbaa;
+      margin-bottom: 16px;
+    }
+
+    .preview-price {
+      font-family: 'Lora', serif;
+      font-size: 22px;
+      font-weight: 600;
+      color: var(--gold);
+    }
+
+    .config-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .control-section {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .control-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .models-group {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .model-btn {
+      background: rgba(255, 255, 255, 0.08);
+      color: white;
+      padding: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      transition: all 0.3s;
+    }
+
+    .model-btn:hover {
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .model-btn.active {
+      border-color: var(--gold);
+      background: rgba(184, 149, 106, 0.15);
+      color: var(--gold);
+      font-weight: 600;
+    }
+
+    .model-btn.disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    .model-btn.disabled:hover {
+      border-color: rgba(255, 255, 255, 0.15);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .colors-group {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
     .color-btn {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-      background: transparent;
-      border: 2px solid rgba(255,255,255,0.2);
-      padding: 12px;
-      border-radius: 8px;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      padding: 10px;
+      border-radius: 4px;
       cursor: pointer;
       color: #d9cfc0;
-      font-size: 12px;
+      font-size: 11px;
       transition: all 0.3s;
     }
-    
+
     .color-btn:hover {
-      border-color: rgba(255,255,255,0.4);
+      border-color: rgba(255, 255, 255, 0.35);
     }
-    
+
     .color-btn.active {
-      border-color: #f4a460;
-      background: rgba(244,164,96,0.1);
+      border-color: var(--gold);
+      background: rgba(184, 149, 106, 0.15);
     }
-    
-    .color-ball {
+
+    .color-circle {
       width: 40px;
       height: 40px;
       border-radius: 50%;
-      border: 3px solid rgba(255,255,255,0.3);
-    }
-    
-    .action-buttons {
       display: flex;
-      gap: 15px;
-      margin-top: 30px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+      border: 2px solid rgba(255, 255, 255, 0.3);
     }
-    
+
+    .color-half {
+      flex: 1;
+      border-radius: 50% 0 0 50%;
+    }
+
+    .color-half:last-child {
+      border-radius: 0 50% 50% 0;
+    }
+
+    .action-btns {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .btn-cart {
+      background: var(--accent);
+      flex: 1;
+      padding: 12px;
+      text-align: center;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-cart:hover { background: #b25c5d; }
+
     .btn-whatsapp {
       background: #25d366;
       flex: 1;
+      padding: 12px;
+      text-align: center;
+      border: none;
+      border-radius: 4px;
+      color: white;
+      font-weight: 600;
+      font-size: 13px;
+      cursor: pointer;
+      transition: background 0.3s;
     }
-    
+
     .btn-whatsapp:hover { background: #1fa952; }
-    
-    .btn-asaas {
-      background: #5e6a7f;
-      flex: 1;
-    }
-    
-    .btn-asaas:hover { background: #4a5260; }
-    
+
     /* FOOTER */
     footer {
-      background: #2c2c2c;
+      background: #3b2a20;
       color: #ccc;
-      padding: 40px;
-      margin-top: 80px;
+      padding: 48px 0;
+      margin-top: 60px;
     }
-    
-    .footer-content {
+
+    .footer-grid {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: 1.2fr 1fr 1fr;
       gap: 40px;
-      margin-bottom: 30px;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
+      margin-bottom: 32px;
+      padding-bottom: 32px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
-    
-    .footer-section h4 {
-      color: white;
-      font-size: 18px;
-      margin-bottom: 15px;
-    }
-    
-    .footer-section p {
-      margin-bottom: 10px;
+
+    footer h4 {
+      font-family: 'Lora', serif;
       font-size: 14px;
-      line-height: 1.6;
+      color: white;
+      margin-bottom: 12px;
+      font-weight: 600;
     }
-    
-    .footer-section a {
-      color: #f4a460;
+
+    footer p, footer a {
+      font-size: 13px;
+      color: #b4a794;
       text-decoration: none;
+      line-height: 1.7;
     }
-    
-    .footer-section a:hover {
-      text-decoration: underline;
+
+    footer a {
+      color: var(--gold);
     }
-    
+
+    footer a:hover { text-decoration: underline; }
+
     .footer-bottom {
       text-align: center;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      font-size: 12px;
-      color: #999;
+      font-size: 11px;
+      color: #8b7d6b;
     }
-    
-    /* MOBILE */
-    @media (max-width: 768px) {
-      .config-content {
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .config-grid {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 32px;
       }
-      
-      .configurator {
-        padding: 30px;
+      .preview-panel {
+        position: static;
       }
-      
-      .hero h1 {
-        font-size: 32px;
-      }
-      
-      .models-buttons {
-        grid-template-columns: 1fr;
-      }
-      
-      .colors-grid {
+      .products-grid {
         grid-template-columns: repeat(2, 1fr);
       }
-    }
-    
-    @media (max-width: 600px) {
       .info-strip {
         grid-template-columns: 1fr;
-        gap: 30px;
-        padding: 40px 0;
-        margin: 40px 0;
+        gap: 32px;
       }
-      
-      .footer-content {
+      .footer-grid {
         grid-template-columns: 1fr;
-        gap: 30px;
+        gap: 24px;
+      }
+      .hero h1 {
+        font-size: 36px;
+      }
+      .nav-links {
+        display: none;
+      }
+      .cart-modal {
+        width: 320px;
+        right: 12px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero {
+        padding: 48px 0;
+      }
+      .hero h1 {
+        font-size: 28px;
+      }
+      .products-grid {
+        grid-template-columns: 1fr;
+      }
+      .models-group {
+        grid-template-columns: 1fr;
+      }
+      .colors-group {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .configurator {
+        padding: 28px;
       }
     }
   </style>
@@ -443,13 +766,29 @@
 <!-- HEADER -->
 <header>
   <div class="container">
-    <div class="header-content">
-      <div class="logo">BreLu</div>
-      <nav>
+    <div class="nav-wrapper">
+      <div class="logo"><img src="logo-brelu.png" alt="BreLu"></div>
+      <nav class="nav-links">
         <a href="#catalog">Catálogo</a>
         <a href="#configurator">Monte sua bolsa</a>
         <a href="#contact">Contato</a>
       </nav>
+      <div class="cart-icon" onclick="toggleCart()">
+        🛍️
+        <div class="cart-count" id="cart-count">0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CART MODAL -->
+  <div class="cart-modal" id="cart-modal">
+    <div class="cart-header">
+      <h3>Meu carrinho</h3>
+      <div class="cart-close" onclick="toggleCart()">×</div>
+    </div>
+    <div class="cart-items" id="cart-items"></div>
+    <div class="cart-footer" id="cart-footer">
+      <div class="cart-empty">Seu carrinho está vazio</div>
     </div>
   </div>
 </header>
@@ -457,18 +796,30 @@
 <!-- HERO -->
 <div class="container">
   <section class="hero">
-    <h1>Bolsas de Crochê Únicas</h1>
-    <p>Cada bolsa é feita à mão com ponto e fio. Escolha seu modelo, escolha suas cores e encomende a sua.</p>
+    <div class="eyebrow">Artesanato em crochê</div>
+    <h1>Cada bolsa é tecida<br>com ponto e propósito</h1>
+    <p>Bolsas de crochê feitas à mão, sob encomenda. Escolha o modelo, escolha as cores que combinam com você, e nós tecemos a sua.</p>
+    <div class="hero-actions">
+      <a href="#configurator" class="btn btn-primary">Monte a sua bolsa</a>
+      <a href="#catalog" class="btn btn-ghost">Ver catálogo</a>
+    </div>
   </section>
+</div>
 
-  <!-- CATÁLOGO -->
-  <section id="catalog" class="catalog">
-    <h2 class="section-title">Catálogo</h2>
+<!-- CATALOG -->
+<section id="catalog" class="catalog section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-eyebrow">Catálogo</div>
+      <h2>Quatro formas, um só ponto</h2>
+    </div>
     <div class="products-grid" id="products"></div>
-  </section>
+  </div>
+</section>
 
-  <!-- INFORMAÇÕES -->
-  <section class="info-strip">
+<!-- INFO STRIP -->
+<div class="container">
+  <div class="info-strip">
     <div class="info-item">
       <div class="info-number">01</div>
       <h3>Sob Encomenda</h3>
@@ -484,60 +835,61 @@
       <h3>Prazo Combinado com Você</h3>
       <p>Combinamos o prazo de produção pelo WhatsApp assim que o pedido é confirmado.</p>
     </div>
-  </section>
+  </div>
+</div>
 
-  <!-- CONFIGURADOR -->
+<!-- CONFIGURATOR -->
+<div class="container">
   <section id="configurator" class="configurator">
-    <h2>Monte Sua Bolsa</h2>
-    <p>Escolha o modelo e as cores que combinam com você. Veja a preview em tempo real.</p>
-    
-    <div class="config-content">
+    <h2>Monte sua bolsa</h2>
+    <p>Escolha o modelo e as cores que combinam com você. Veja o resumo de compra.</p>
+
+    <div class="config-grid">
       <!-- PREVIEW -->
-      <div class="preview-box">
-        <svg id="preview" viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg"></svg>
-        <div class="preview-info" id="preview-colors">Terracota + Marfim</div>
+      <div class="preview-panel">
+        <div class="preview-visual">
+          <div style="font-size: 48px; opacity: 0.4;">👜</div>
+        </div>
         <div class="preview-model" id="preview-model">Tote Clássica</div>
+        <div class="preview-colors" id="preview-colors">Preto + Branco</div>
         <div class="preview-price" id="preview-price">R$ 189,00</div>
       </div>
-      
+
       <!-- CONTROLS -->
-      <div class="controls">
-        <div class="control-group">
-          <div class="control-label">1. Escolha o Modelo</div>
-          <div class="models-buttons" id="models"></div>
+      <div class="config-controls">
+        <div class="control-section">
+          <div class="control-label">1. Escolha o modelo</div>
+          <div class="models-group" id="models"></div>
         </div>
-        
-        <div class="control-group">
-          <div class="control-label">2. Cor 1 (Predominante)</div>
-          <div class="colors-grid" id="colors1"></div>
+
+        <div class="control-section">
+          <div class="control-label">2. Escolha a combinação de cores</div>
+          <div class="colors-group" id="colors"></div>
         </div>
-        
-        <div class="control-group">
-          <div class="control-label">3. Cor 2 (Detalhes)</div>
-          <div class="colors-grid" id="colors2"></div>
-        </div>
-        
-        <div class="action-buttons">
-          <button class="btn btn-whatsapp" id="whatsapp">WhatsApp</button>
-          <button class="btn btn-asaas" id="asaas">Asaas</button>
+
+        <div class="action-btns">
+          <button class="btn-cart" onclick="addToCart()">Adicionar ao carrinho</button>
+          <a href="#" class="btn-whatsapp" id="whatsapp">WhatsApp</a>
         </div>
       </div>
     </div>
   </section>
+</div>
 
-  <!-- FOOTER -->
-  <footer id="contact">
-    <div class="footer-content">
-      <div class="footer-section">
+<!-- FOOTER -->
+<footer id="contact">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
         <h4>BreLu</h4>
         <p>Bolsas de crochê feitas à mão, uma de cada vez. Escolha o modelo, escolha as cores, e deixe a gente tecer a sua.</p>
       </div>
-      <div class="footer-section">
+      <div>
         <h4>Contato</h4>
-        <p>WhatsApp: <a href="https://wa.me/5511999999999">(11) 99999-9999</a></p>
-        <p>Email: <a href="mailto:contato@brelu.com.br">contato@brelu.com.br</a></p>
+        <p><a href="https://wa.me/5511999999999" target="_blank">(11) 99999-9999</a></p>
+        <p><a href="mailto:contato@brelu.com.br">contato@brelu.com.br</a></p>
       </div>
-      <div class="footer-section">
+      <div>
         <h4>Navegação</h4>
         <p><a href="#catalog">Catálogo</a></p>
         <p><a href="#configurator">Monte sua bolsa</a></p>
@@ -546,156 +898,152 @@
     <div class="footer-bottom">
       <p>© 2026 BreLu. Feito à mão, com carinho.</p>
     </div>
-  </footer>
-</div>
+  </div>
+</footer>
 
 <script>
   // DADOS
   const products = [
-    { id: 'tote', name: 'Tote Clássica', price: 189, desc: 'Alças duplas, corpo amplo' },
-    { id: 'bucket', name: 'Bucket Trançada', price: 159, desc: 'Cilíndrica, cordão no topo' },
-    { id: 'mini', name: 'Mini Transversal', price: 129, desc: 'Compacta, alça longa' },
-    { id: 'feira', name: 'Sacola de Feira', price: 169, desc: 'Bojo largo, muito capaz' }
+    { id: 'tote', name: 'Tote Clássica', price: 189, desc: 'Alças duplas, corpo amplo', available: true },
+    { id: 'bucket', name: 'Bucket Trançada', price: 159, desc: 'Cilíndrica, cordão no topo', available: true },
+    { id: 'mini', name: 'Mini Transversal', price: 129, desc: 'Compacta, alça longa', available: true },
+    { id: 'teste01', name: '#Modelo Teste 01', price: 169, desc: 'Bojo largo, muito capaz', available: true, image: 'modelo-teste-01-frente.png' }
   ];
 
-  const colors = [
-    { id: 'terracota', name: 'Terracota', hex: '#b25c41' },
-    { id: 'salvia', name: 'Sálvia', hex: '#7c8f5d' },
-    { id: 'rosa', name: 'Rosa', hex: '#c4707a' },
-    { id: 'mostarda', name: 'Mostarda', hex: '#ce9b3d' },
-    { id: 'marfim', name: 'Marfim', hex: '#e8dfc8' },
-    { id: 'grafite', name: 'Grafite', hex: '#3f3a34' }
+  const colorCombinations = [
+    { id: 'pb', name: 'Preto + Branco', color1: '#1a1a1a', color2: '#ffffff' },
+    { id: 'bv', name: 'Branco + Vermelho', color1: '#ffffff', color2: '#c41e3a' },
+    { id: 'bl', name: 'Branco + Laranja', color1: '#ffffff', color2: '#ff8c00' }
   ];
 
   // STATE
   let state = {
     model: 'tote',
-    color1: 'terracota',
-    color2: 'marfim'
+    colors: 'pb'
   };
 
-  // FUNÇÃO: Desenhar bolsa diferente por modelo
-  function drawBag(modelId, color1, color2) {
-    const svg = document.getElementById('preview');
-    
-    let bagShape = '';
-    
-    if(modelId === 'tote') {
-      bagShape = `
-        <path d="M 60 100 Q 55 120 55 150 L 55 220 Q 55 240 70 250 L 130 250 Q 145 240 145 220 L 145 150 Q 145 120 140 100 Z" fill="url(#stripes)"/>
-        <path d="M 70 90 Q 65 60 70 30 Q 78 20 90 23 Q 100 60 90 90" fill="none" stroke="${color1}" stroke-width="8" stroke-linecap="round"/>
-        <path d="M 130 90 Q 135 60 130 30 Q 122 20 110 23 Q 100 60 110 90" fill="none" stroke="${color1}" stroke-width="8" stroke-linecap="round"/>
-      `;
-    } else if(modelId === 'bucket') {
-      bagShape = `
-        <path d="M 65 105 Q 60 130 60 160 L 60 220 Q 60 240 75 250 L 125 250 Q 140 240 140 220 L 140 160 Q 140 130 135 105 Z" fill="url(#stripes)"/>
-        <path d="M 80 100 Q 75 65 85 35 Q 95 25 100 25 Q 105 25 115 35 Q 125 65 120 100" fill="none" stroke="${color1}" stroke-width="7" stroke-linecap="round"/>
-        <line x1="75" y1="103" x2="125" y2="103" stroke="#3b2a20" stroke-width="2" opacity="0.15"/>
-      `;
-    } else if(modelId === 'mini') {
-      bagShape = `
-        <path d="M 75 125 Q 70 145 70 180 L 70 220 Q 70 238 85 248 L 115 248 Q 130 238 130 220 L 130 180 Q 130 145 125 125 Z" fill="url(#stripes)"/>
-        <path d="M 85 125 Q 80 90 85 55 Q 92 45 100 45 Q 108 45 115 55 Q 120 90 115 125" fill="none" stroke="${color1}" stroke-width="6" stroke-linecap="round"/>
-      `;
-    } else if(modelId === 'feira') {
-      bagShape = `
-        <path d="M 50 110 Q 45 135 45 170 L 45 225 Q 45 242 60 252 L 140 252 Q 155 242 155 225 L 155 170 Q 155 135 150 110 Z" fill="url(#stripes)"/>
-        <path d="M 60 105 Q 55 70 65 35 Q 75 25 85 30 Q 95 70 90 105" fill="none" stroke="${color1}" stroke-width="9" stroke-linecap="round"/>
-        <path d="M 140 105 Q 145 70 135 35 Q 125 25 115 30 Q 105 70 110 105" fill="none" stroke="${color1}" stroke-width="9" stroke-linecap="round"/>
-      `;
+  let cart = [];
+
+  // CARRINHO
+  function toggleCart() {
+    document.getElementById('cart-modal').classList.toggle('active');
+  }
+
+  function addToCart() {
+    const product = products.find(p => p.id === state.model);
+    const combo = colorCombinations.find(c => c.id === state.colors);
+
+    cart.push({
+      id: Date.now(),
+      model: product.name,
+      colors: combo.name,
+      price: product.price
+    });
+
+    updateCart();
+    alert('Bolsa adicionada ao carrinho!');
+  }
+
+  function removeFromCart(id) {
+    cart = cart.filter(item => item.id !== id);
+    updateCart();
+  }
+
+  function updateCart() {
+    const count = cart.length;
+    document.getElementById('cart-count').textContent = count;
+
+    const cartItems = document.getElementById('cart-items');
+    const cartFooter = document.getElementById('cart-footer');
+
+    if (cart.length === 0) {
+      cartItems.innerHTML = '';
+      cartFooter.innerHTML = '<div class="cart-empty">Seu carrinho está vazio</div>';
+      return;
     }
-    
-    svg.innerHTML = `
-      <defs>
-        <pattern id="stripes" width="8" height="200" patternUnits="userSpaceOnUse">
-          <rect x="0" y="0" width="4" height="200" fill="${color1}"/>
-          <rect x="4" y="0" width="4" height="200" fill="${color2}"/>
-        </pattern>
-      </defs>
-      
-      <ellipse cx="100" cy="260" rx="60" ry="12" fill="rgba(0,0,0,0.1)"/>
-      ${bagShape}
-      <ellipse cx="75" cy="160" rx="25" ry="40" fill="white" opacity="0.08"/>
+
+    let total = 0;
+    cartItems.innerHTML = cart.map(item => {
+      total += item.price;
+      return `
+        <div class="cart-item">
+          <div class="cart-item-info">
+            <div class="cart-item-name">${item.model}</div>
+            <div class="cart-item-colors">${item.colors}</div>
+          </div>
+          <div class="cart-item-price">R$ ${item.price},00</div>
+          <div class="cart-item-remove" onclick="removeFromCart(${item.id})">✕</div>
+        </div>
+      `;
+    }).join('');
+
+    cartFooter.innerHTML = `
+      <div class="cart-total">
+        <span>Total:</span>
+        <span>R$ ${total},00</span>
+      </div>
+      <button class="cart-checkout" onclick="checkout()">Ir para pagamento</button>
+      <p style="font-size: 11px; color: #999; margin-top: 8px;">Você será redirecionado para o Asaas para finalizar o pagamento.</p>
     `;
   }
 
-  // FUNÇÃO: Atualizar preview
+  function checkout() {
+    if (cart.length === 0) {
+      alert('Seu carrinho está vazio');
+      return;
+    }
+
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    const description = cart.map(item => `${item.model} (${item.colors})`).join(', ');
+
+    // LINK DO ASAAS - SUBSTITUA COM SEU LINK REAL
+    const asaasLink = `https://www.asaas.com/COLOQUE_SEU_LINK_AQUI?description=${encodeURIComponent(description)}&value=${total}`;
+
+    window.location.href = asaasLink;
+  }
+
+  // ATUALIZAR PREVIEW
   function updatePreview() {
     const product = products.find(p => p.id === state.model);
-    const c1 = colors.find(c => c.id === state.color1);
-    const c2 = colors.find(c => c.id === state.color2);
+    const combo = colorCombinations.find(c => c.id === state.colors);
 
-    drawBag(state.model, c1.hex, c2.hex);
     document.getElementById('preview-model').textContent = product.name;
-    document.getElementById('preview-colors').textContent = `${c1.name} + ${c2.name}`;
+    document.getElementById('preview-colors').textContent = combo.name;
     document.getElementById('preview-price').textContent = `R$ ${product.price},00`;
 
-    // WhatsApp
-    const msg = encodeURIComponent(`Olá! Quero encomendar a bolsa ${product.name} nas cores ${c1.name} e ${c2.name}. R$ ${product.price},00`);
+    const msg = encodeURIComponent(`Olá! Quero encomendar a bolsa ${product.name} nas cores ${combo.name}. R$ ${product.price},00`);
     document.getElementById('whatsapp').href = `https://wa.me/5511999999999?text=${msg}`;
   }
 
   // RENDERIZAR CATÁLOGO
   document.getElementById('products').innerHTML = products.map(p => {
-    let svg = '';
-    const catalogColor = '#8b5a3c'; // Cor única marrom
-    
-    if(p.id === 'tote') {
-      svg = `<svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg" style="width: 70%; height: auto;">
-        <ellipse cx="100" cy="260" rx="50" ry="10" fill="rgba(0,0,0,0.1)"/>
-        <path d="M 60 120 Q 55 140 55 160 L 55 220 Q 55 235 70 245 L 130 245 Q 145 235 145 220 L 145 160 Q 145 140 140 120 Z" fill="${catalogColor}" stroke="rgba(0,0,0,0.05)" stroke-width="1"/>
-        <path d="M 70 110 Q 65 80 70 50 Q 78 40 90 43 Q 100 80 90 110" fill="none" stroke="${catalogColor}" stroke-width="8" stroke-linecap="round"/>
-        <path d="M 130 110 Q 135 80 130 50 Q 122 40 110 43 Q 100 80 110 110" fill="none" stroke="${catalogColor}" stroke-width="8" stroke-linecap="round"/>
-      </svg>`;
-    } else if(p.id === 'bucket') {
-      svg = `<svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg" style="width: 70%; height: auto;">
-        <ellipse cx="100" cy="260" rx="50" ry="10" fill="rgba(0,0,0,0.1)"/>
-        <path d="M 65 110 Q 60 135 60 160 L 60 220 Q 60 235 75 245 L 125 245 Q 140 235 140 220 L 140 160 Q 140 135 135 110 Z" fill="${catalogColor}" stroke="rgba(0,0,0,0.05)" stroke-width="1"/>
-        <path d="M 80 105 Q 75 70 85 40 Q 95 30 100 30 Q 105 30 115 40 Q 125 70 120 105" fill="none" stroke="${catalogColor}" stroke-width="7" stroke-linecap="round"/>
-        <line x1="75" y1="108" x2="125" y2="108" stroke="#3b2a20" stroke-width="2" opacity="0.15"/>
-      </svg>`;
-    } else if(p.id === 'mini') {
-      svg = `<svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg" style="width: 70%; height: auto;">
-        <ellipse cx="100" cy="260" rx="45" ry="10" fill="rgba(0,0,0,0.1)"/>
-        <path d="M 75 130 Q 70 150 70 180 L 70 220 Q 70 235 85 245 L 115 245 Q 130 235 130 220 L 130 180 Q 130 150 125 130 Z" fill="${catalogColor}" stroke="rgba(0,0,0,0.05)" stroke-width="1"/>
-        <path d="M 85 130 Q 80 90 85 55 Q 92 45 100 45 Q 108 45 115 55 Q 120 90 115 130" fill="none" stroke="${catalogColor}" stroke-width="6" stroke-linecap="round"/>
-      </svg>`;
-    } else if(p.id === 'feira') {
-      svg = `<svg viewBox="0 0 200 280" xmlns="http://www.w3.org/2000/svg" style="width: 70%; height: auto;">
-        <ellipse cx="100" cy="260" rx="55" ry="10" fill="rgba(0,0,0,0.1)"/>
-        <path d="M 55 115 Q 50 140 50 170 L 50 225 Q 50 240 65 250 L 135 250 Q 150 240 150 225 L 150 170 Q 150 140 145 115 Z" fill="${catalogColor}" stroke="rgba(0,0,0,0.05)" stroke-width="1"/>
-        <path d="M 65 110 Q 60 70 70 35 Q 80 25 90 30 Q 100 70 95 110" fill="none" stroke="${catalogColor}" stroke-width="9" stroke-linecap="round"/>
-        <path d="M 135 110 Q 140 70 130 35 Q 120 25 110 30 Q 100 70 105 110" fill="none" stroke="${catalogColor}" stroke-width="9" stroke-linecap="round"/>
-      </svg>`;
-    }
-    
+    const img = p.image ? `<img src="${p.image}" alt="${p.name}">` : '<div style="font-size: 48px; opacity: 0.4;">👜</div>';
     return `
       <div class="product-card">
-        <div class="product-image">${svg}</div>
+        <div class="product-image">${img}</div>
         <div class="product-name">${p.name}</div>
         <div class="product-desc">${p.desc}</div>
         <div class="product-price">R$ ${p.price},00</div>
-        <button class="btn" onclick="selectModel('${p.id}')">Personalizar</button>
+        <div class="product-buttons">
+          <button class="btn-small" onclick="addDirectToCart('${p.id}')">Adicionar</button>
+          <button class="btn-small secondary" onclick="selectModel('${p.id}')">Personalizar</button>
+        </div>
       </div>
     `;
   }).join('');
 
   // RENDERIZAR MODELOS
-  document.getElementById('models').innerHTML = products.map(p => `
-    <button class="model-btn ${p.id === state.model ? 'active' : ''}" onclick="selectModel('${p.id}')">${p.name}</button>
+  document.getElementById('models').innerHTML = products.map((p, i) => `
+    <button class="model-btn ${i === 0 ? 'active' : ''}" onclick="selectModel('${p.id}')">${p.name}</button>
   `).join('');
 
-  // RENDERIZAR CORES
-  document.getElementById('colors1').innerHTML = colors.map(c => `
-    <button class="color-btn ${c.id === state.color1 ? 'active' : ''}" onclick="selectColor1('${c.id}')">
-      <div class="color-ball" style="background: ${c.hex}"></div>
-      ${c.name}
-    </button>
-  `).join('');
-
-  document.getElementById('colors2').innerHTML = colors.map(c => `
-    <button class="color-btn ${c.id === state.color2 ? 'active' : ''}" onclick="selectColor2('${c.id}')">
-      <div class="color-ball" style="background: ${c.hex}"></div>
+  // RENDERIZAR CORES COM CÍRCULOS DIVIDIDOS
+  document.getElementById('colors').innerHTML = colorCombinations.map((c, i) => `
+    <button class="color-btn ${i === 0 ? 'active' : ''}" onclick="selectColors('${c.id}')">
+      <div class="color-circle">
+        <div class="color-half" style="background: ${c.color1}"></div>
+        <div class="color-half" style="background: ${c.color2}"></div>
+      </div>
       ${c.name}
     </button>
   `).join('');
@@ -704,52 +1052,31 @@
   function selectModel(id) {
     state.model = id;
     updatePreview();
-    
-    // Atualizar active nos botões
-    const modelButtons = document.querySelectorAll('.model-btn');
-    modelButtons.forEach(btn => {
-      btn.classList.remove('active');
-      if(btn.textContent.trim().includes(products.find(p => p.id === id).name)) {
-        btn.classList.add('active');
+    document.querySelectorAll('.model-btn').forEach(b => {
+      b.classList.remove('active');
+      if(products.find(p => p.id === id).name === b.textContent.trim()) {
+        b.classList.add('active');
       }
     });
-    
-    // Scroll para a preview
     document.getElementById('configurator').scrollIntoView({ behavior: 'smooth' });
   }
 
-  function selectColor1(id) {
-    state.color1 = id;
+  function selectColors(id) {
+    state.colors = id;
     updatePreview();
-    
-    const colorButtons1 = document.querySelectorAll('#colors1 .color-btn');
-    colorButtons1.forEach((btn, i) => {
-      btn.classList.remove('active');
-      if(colors[i].id === id) {
-        btn.classList.add('active');
-      }
+    document.querySelectorAll('.color-btn').forEach((b, i) => {
+      b.classList.remove('active');
+      if(colorCombinations[i].id === id) b.classList.add('active');
     });
   }
 
-  function selectColor2(id) {
-    state.color2 = id;
-    updatePreview();
-    
-    const colorButtons2 = document.querySelectorAll('#colors2 .color-btn');
-    colorButtons2.forEach((btn, i) => {
-      btn.classList.remove('active');
-      if(colors[i].id === id) {
-        btn.classList.add('active');
-      }
-    });
+  function addDirectToCart(modelId) {
+    state.model = modelId;
+    addToCart();
   }
 
   // INICIALIZAR
   updatePreview();
-  
-  // WhatsApp link
-  document.getElementById('whatsapp').href = '#';
-  document.getElementById('asaas').href = 'https://www.asaas.com';
 </script>
 
 </body>

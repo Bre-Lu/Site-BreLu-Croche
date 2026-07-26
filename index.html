@@ -48,11 +48,11 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 16px 0;
+      padding: 12px 0;
     }
 
     .logo {
-      height: 60px;
+      height: 80px;
       display: flex;
       align-items: center;
     }
@@ -507,12 +507,53 @@
       position: relative;
     }
 
+    .carousel-container {
+      position: relative;
+      overflow: auto;
+      height: 500px;
+      background: var(--card);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+      cursor: grab;
+    }
+
+    .carousel-container:active {
+      cursor: grabbing;
+    }
+
+    .carousel-container::after {
+      content: "Clique para ampliar • Arraste para navegar";
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(59, 42, 32, 0.8);
+      color: white;
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-size: 11px;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
     .carousel-image {
       width: 100%;
-      border-radius: 8px;
-      margin-bottom: 12px;
-      object-fit: cover;
-      max-height: 400px;
+      height: 100%;
+      object-fit: contain;
+      max-width: none;
+      transition: transform 0.1s ease;
+    }
+
+    .carousel-image.zoom {
+      cursor: grab;
+      transform: scale(2);
+    }
+
+    .carousel-image.zoom:active {
+      cursor: grabbing;
     }
 
     .carousel-controls {
@@ -1124,7 +1165,9 @@
     </div>
     <div class="modal-body">
       <div class="modal-carousel">
-        <img id="carousel-image" src="modelo-teste-01-frente.png" alt="Produto" class="carousel-image">
+        <div class="carousel-container" id="carousel-container">
+          <img id="carousel-image" src="modelo-teste-01-frente.png" alt="Produto" class="carousel-image">
+        </div>
         <div class="carousel-controls">
           <button class="carousel-btn" onclick="prevCarouselImage()">←</button>
           <button class="carousel-btn" onclick="nextCarouselImage()">→</button>
@@ -1251,6 +1294,7 @@
   function openProductModal(productId) {
     currentProduct = products.find(p => p.id === productId);
     currentCarouselIndex = 0;
+    isZoomed = false;
     
     if (!currentProduct) return;
 
@@ -1265,11 +1309,15 @@
       updateCarouselDots();
     } else if (currentProduct.image) {
       document.getElementById('carousel-image').src = currentProduct.image;
+      document.getElementById('carousel-image').classList.remove('zoom');
     } else {
       document.getElementById('carousel-image').innerHTML = '<div style="font-size: 80px;">👜</div>';
     }
 
     document.getElementById('product-modal').classList.add('active');
+    
+    // Reinicializar listeners para zoom
+    setTimeout(setupImageZoomListeners, 100);
   }
 
   function closeProductModal() {
@@ -1312,7 +1360,10 @@
 
   function updateCarouselImage() {
     if (!currentProduct || !currentProduct.images) return;
-    document.getElementById('carousel-image').src = currentProduct.images[currentCarouselIndex];
+    const img = document.getElementById('carousel-image');
+    img.src = currentProduct.images[currentCarouselIndex];
+    img.classList.remove('zoom');
+    resetImagePan();
   }
 
   function updateCarouselDots() {
@@ -1328,6 +1379,73 @@
     updateCarouselImage();
     updateCarouselDots();
   }
+
+  // ZOOM E PAN DA IMAGEM
+  let isZoomed = false;
+  let startX, startY, scrollLeft, scrollTop;
+
+  function toggleImageZoom(e) {
+    const img = document.getElementById('carousel-image');
+    isZoomed = !isZoomed;
+    
+    if (isZoomed) {
+      img.classList.add('zoom');
+      startX = e.pageX - img.offsetLeft;
+      startY = e.pageY - img.offsetTop;
+      scrollLeft = 0;
+      scrollTop = 0;
+    } else {
+      img.classList.remove('zoom');
+      resetImagePan();
+    }
+  }
+
+  function resetImagePan() {
+    const container = document.getElementById('carousel-container');
+    container.scrollLeft = 0;
+    container.scrollTop = 0;
+  }
+
+  function handleImagePan(e) {
+    if (!isZoomed) return;
+    
+    const img = document.getElementById('carousel-image');
+    const container = document.getElementById('carousel-container');
+    
+    const x = e.pageX - img.offsetLeft;
+    const y = e.pageY - img.offsetTop;
+    
+    const walkX = (x - startX) * 1;
+    const walkY = (y - startY) * 1;
+    
+    container.scrollLeft -= walkX;
+    container.scrollTop -= walkY;
+  }
+
+  // Adicionar listeners ao DOM
+  function setupImageZoomListeners() {
+    const img = document.getElementById('carousel-image');
+    if (img) {
+      img.removeEventListener('click', toggleImageZoom);
+      img.removeEventListener('mousemove', handleImagePan);
+      img.removeEventListener('mouseleave', resetImageOnLeave);
+      
+      img.addEventListener('click', toggleImageZoom);
+      img.addEventListener('mousemove', handleImagePan);
+      img.addEventListener('mouseleave', resetImageOnLeave);
+    }
+  }
+
+  function resetImageOnLeave() {
+    if (isZoomed) {
+      isZoomed = false;
+      const img = document.getElementById('carousel-image');
+      img.classList.remove('zoom');
+      resetImagePan();
+    }
+  }
+
+  document.addEventListener('DOMContentLoaded', setupImageZoomListeners);
 
   // Fechar modal ao clicar fora
   window.addEventListener('click', function(event) {

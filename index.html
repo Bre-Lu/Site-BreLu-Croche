@@ -52,7 +52,7 @@
     }
 
     .logo {
-      height: 40px;
+      height: 60px;
       display: flex;
       align-items: center;
     }
@@ -383,9 +383,209 @@
       margin-bottom: 16px;
     }
 
+    .product-colors {
+      display: flex;
+      gap: 6px;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .color-dot {
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 2px solid var(--line);
+      box-shadow: 0 2px 4px rgba(59, 42, 32, 0.15);
+      display: flex;
+      overflow: hidden;
+    }
+
+    .color-half {
+      flex: 1;
+    }
+
+    .color-half:first-child {
+      border-radius: 50% 0 0 50%;
+    }
+
+    .color-half:last-child {
+      border-radius: 0 50% 50% 0;
+    }
+
+    .modal-quantity {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .modal-quantity label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .quantity-input {
+      width: 60px;
+      padding: 8px;
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      text-align: center;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .modal-add-cart {
+      width: 100%;
+      background: var(--accent);
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 14px;
+      transition: background 0.3s;
+      margin-top: 20px;
+    }
+
+    .modal-add-cart:hover { background: #b25c5d; }
+
     .product-buttons {
       display: flex;
       gap: 8px;
+    }
+
+    /* MODAL PRODUTO */
+    .product-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 2000;
+      padding: 20px;
+      overflow-y: auto;
+    }
+
+    .product-modal.active { display: flex; align-items: center; justify-content: center; }
+
+    .modal-content {
+      background: white;
+      border-radius: 12px;
+      max-width: 900px;
+      width: 100%;
+      padding: 40px;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
+    .modal-close {
+      cursor: pointer;
+      font-size: 28px;
+      color: var(--ink-soft);
+      background: none;
+      border: none;
+    }
+
+    .modal-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .modal-carousel {
+      position: relative;
+    }
+
+    .carousel-image {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      object-fit: cover;
+      max-height: 400px;
+    }
+
+    .carousel-controls {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .carousel-btn {
+      background: var(--ink);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      transition: background 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .carousel-btn:hover { background: var(--accent); }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .carousel-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--line);
+      cursor: pointer;
+    }
+
+    .carousel-dot.active { background: var(--accent); }
+
+    .modal-info h2 {
+      font-size: 28px;
+      margin-bottom: 10px;
+    }
+
+    .modal-price {
+      font-size: 24px;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .modal-specs {
+      background: var(--card);
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+    }
+
+    .modal-specs h3 {
+      font-size: 14px;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 12px;
+      font-weight: 600;
+    }
+
+    .modal-specs p {
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.8;
     }
 
     .btn-small {
@@ -455,6 +655,41 @@
       padding: 56px;
       border-radius: 8px;
       margin: 60px 0;
+      position: relative;
+    }
+
+    .configurator.coming-soon {
+      filter: blur(4px);
+      pointer-events: none;
+    }
+
+    .coming-soon-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(59, 42, 32, 0.7);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 16px;
+      z-index: 10;
+    }
+
+    .coming-soon-text {
+      font-family: 'Lora', serif;
+      font-size: 32px;
+      font-weight: 600;
+      color: white;
+      text-align: center;
+    }
+
+    .coming-soon-sub {
+      font-size: 14px;
+      color: #d9cfc0;
     }
 
     .configurator h2 {
@@ -827,7 +1062,7 @@
     </div>
     <div class="info-item">
       <div class="info-number">02</div>
-      <h3>Fio 100% Algodão</h3>
+      <h3>Fio 100% Resistente</h3>
       <p>Mais resistência para o uso diário e um caimento macio, sem perder a forma.</p>
     </div>
     <div class="info-item">
@@ -840,7 +1075,11 @@
 
 <!-- CONFIGURATOR -->
 <div class="container">
-  <section id="configurator" class="configurator">
+  <section id="configurator" class="configurator coming-soon">
+    <div class="coming-soon-overlay">
+      <div class="coming-soon-text">Em Construção</div>
+      <div class="coming-soon-sub">Esta seção será em breve disponibilizada</div>
+    </div>
     <h2>Monte sua bolsa</h2>
     <p>Escolha o modelo e as cores que combinam com você. Veja o resumo de compra.</p>
 
@@ -876,6 +1115,42 @@
   </section>
 </div>
 
+<!-- PRODUCT MODAL -->
+<div class="product-modal" id="product-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h2 id="modal-product-name">Tote Clássica</h2>
+      <button class="modal-close" onclick="closeProductModal()">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-carousel">
+        <img id="carousel-image" src="modelo-teste-01-frente.png" alt="Produto" class="carousel-image">
+        <div class="carousel-controls">
+          <button class="carousel-btn" onclick="prevCarouselImage()">←</button>
+          <button class="carousel-btn" onclick="nextCarouselImage()">→</button>
+        </div>
+        <div class="carousel-dots" id="carousel-dots"></div>
+      </div>
+      <div class="modal-info">
+        <div class="modal-price" id="modal-price">R$ 189,00</div>
+        <div class="modal-specs">
+          <h3>Descrição</h3>
+          <p id="modal-description">Alças duplas, corpo amplo</p>
+        </div>
+        <div class="modal-specs">
+          <h3>Detalhes</h3>
+          <p>✓ Fio 100% resistente<br>✓ Sob encomenda<br>✓ Prazo combinado<br>✓ Disponível em 3 combinações de cores</p>
+        </div>
+        <div class="modal-quantity">
+          <label for="modal-quantity-input">Quantidade:</label>
+          <input type="number" id="modal-quantity-input" class="quantity-input" value="1" min="1" max="10">
+        </div>
+        <button class="modal-add-cart" onclick="addFromModal()">Adicionar ao carrinho</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- FOOTER -->
 <footer id="contact">
   <div class="container">
@@ -904,10 +1179,56 @@
 <script>
   // DADOS
   const products = [
-    { id: 'tote', name: 'Tote Clássica', price: 189, desc: 'Alças duplas, corpo amplo', available: true },
-    { id: 'bucket', name: 'Bucket Trançada', price: 159, desc: 'Cilíndrica, cordão no topo', available: true },
-    { id: 'mini', name: 'Mini Transversal', price: 129, desc: 'Compacta, alça longa', available: true },
-    { id: 'teste01', name: '#Modelo Teste 01', price: 169, desc: 'Bojo largo, muito capaz', available: true, image: 'modelo-teste-01-frente.png' }
+    { 
+      id: 'tote', 
+      name: 'Tote Clássica', 
+      price: 189, 
+      desc: 'Alças duplas, corpo amplo', 
+      available: true,
+      colorCombos: [
+        { color1: '#1a1a1a', color2: '#ffffff', name: 'Preto + Branco' },
+        { color1: '#ffffff', color2: '#c41e3a', name: 'Branco + Vermelho' },
+        { color1: '#ff8c00', color2: '#ffffff', name: 'Laranja + Branco' }
+      ]
+    },
+    { 
+      id: 'bucket', 
+      name: 'Bucket Trançada', 
+      price: 159, 
+      desc: 'Cilíndrica, cordão no topo', 
+      available: true,
+      colorCombos: [
+        { color1: '#1a1a1a', color2: '#ffffff', name: 'Preto + Branco' },
+        { color1: '#ffffff', color2: '#c41e3a', name: 'Branco + Vermelho' },
+        { color1: '#ff8c00', color2: '#ffffff', name: 'Laranja + Branco' }
+      ]
+    },
+    { 
+      id: 'mini', 
+      name: 'Mini Transversal', 
+      price: 129, 
+      desc: 'Compacta, alça longa', 
+      available: true,
+      colorCombos: [
+        { color1: '#1a1a1a', color2: '#ffffff', name: 'Preto + Branco' },
+        { color1: '#ffffff', color2: '#c41e3a', name: 'Branco + Vermelho' },
+        { color1: '#ff8c00', color2: '#ffffff', name: 'Laranja + Branco' }
+      ]
+    },
+    { 
+      id: 'teste01', 
+      name: '#Modelo Teste 01', 
+      price: 169, 
+      desc: 'Bojo largo, muito capaz', 
+      available: true, 
+      image: 'modelo-teste-01-frente.png',
+      images: ['modelo-teste-01-frente.png', 'modelo-teste-01-detalhe.jpg'],
+      colorCombos: [
+        { color1: '#1a1a1a', color2: '#ffffff', name: 'Preto + Branco' },
+        { color1: '#ffffff', color2: '#c41e3a', name: 'Branco + Vermelho' },
+        { color1: '#ff8c00', color2: '#ffffff', name: 'Laranja + Branco' }
+      ]
+    }
   ];
 
   const colorCombinations = [
@@ -923,6 +1244,98 @@
   };
 
   let cart = [];
+  let currentProduct = null;
+  let currentCarouselIndex = 0;
+
+  // MODAL DE PRODUTO
+  function openProductModal(productId) {
+    currentProduct = products.find(p => p.id === productId);
+    currentCarouselIndex = 0;
+    
+    if (!currentProduct) return;
+
+    document.getElementById('modal-product-name').textContent = currentProduct.name;
+    document.getElementById('modal-price').textContent = `R$ ${currentProduct.price},00`;
+    document.getElementById('modal-description').textContent = currentProduct.desc;
+    document.getElementById('modal-quantity-input').value = 1;
+
+    // Se tem múltiplas imagens, usar carrossel; senão usar a imagem padrão ou ícone
+    if (currentProduct.images && currentProduct.images.length > 0) {
+      updateCarouselImage();
+      updateCarouselDots();
+    } else if (currentProduct.image) {
+      document.getElementById('carousel-image').src = currentProduct.image;
+    } else {
+      document.getElementById('carousel-image').innerHTML = '<div style="font-size: 80px;">👜</div>';
+    }
+
+    document.getElementById('product-modal').classList.add('active');
+  }
+
+  function closeProductModal() {
+    document.getElementById('product-modal').classList.remove('active');
+    currentProduct = null;
+  }
+
+  function addFromModal() {
+    if (!currentProduct) return;
+    
+    const quantity = parseInt(document.getElementById('modal-quantity-input').value) || 1;
+    
+    for (let i = 0; i < quantity; i++) {
+      cart.push({
+        id: Date.now() + i,
+        model: currentProduct.name,
+        colors: 'Preto + Branco',
+        price: currentProduct.price
+      });
+    }
+
+    updateCart();
+    alert(`${quantity} bolsa(s) adicionada(s) ao carrinho!`);
+    closeProductModal();
+  }
+
+  function nextCarouselImage() {
+    if (!currentProduct || !currentProduct.images) return;
+    currentCarouselIndex = (currentCarouselIndex + 1) % currentProduct.images.length;
+    updateCarouselImage();
+    updateCarouselDots();
+  }
+
+  function prevCarouselImage() {
+    if (!currentProduct || !currentProduct.images) return;
+    currentCarouselIndex = (currentCarouselIndex - 1 + currentProduct.images.length) % currentProduct.images.length;
+    updateCarouselImage();
+    updateCarouselDots();
+  }
+
+  function updateCarouselImage() {
+    if (!currentProduct || !currentProduct.images) return;
+    document.getElementById('carousel-image').src = currentProduct.images[currentCarouselIndex];
+  }
+
+  function updateCarouselDots() {
+    if (!currentProduct || !currentProduct.images) return;
+    const dotsContainer = document.getElementById('carousel-dots');
+    dotsContainer.innerHTML = currentProduct.images.map((_, i) => `
+      <div class="carousel-dot ${i === currentCarouselIndex ? 'active' : ''}" onclick="goToCarouselImage(${i})"></div>
+    `).join('');
+  }
+
+  function goToCarouselImage(index) {
+    currentCarouselIndex = index;
+    updateCarouselImage();
+    updateCarouselDots();
+  }
+
+  // Fechar modal ao clicar fora
+  window.addEventListener('click', function(event) {
+    const modal = document.getElementById('product-modal');
+    if (event.target === modal) {
+      closeProductModal();
+    }
+  });
 
   // CARRINHO
   function toggleCart() {
@@ -1017,13 +1430,24 @@
 
   // RENDERIZAR CATÁLOGO
   document.getElementById('products').innerHTML = products.map(p => {
-    const img = p.image ? `<img src="${p.image}" alt="${p.name}">` : '<div style="font-size: 48px; opacity: 0.4;">👜</div>';
+    const img = p.image ? `<img src="${p.image}" alt="${p.name}" style="cursor: pointer;" onclick="openProductModal('${p.id}')">` : '<div style="font-size: 48px; opacity: 0.4;">👜</div>';
+    const colorsHtml = p.colorCombos ? `
+      <div class="product-colors">
+        ${p.colorCombos.map(combo => `
+          <div class="color-dot">
+            <div class="color-half" style="background: ${combo.color1};"></div>
+            <div class="color-half" style="background: ${combo.color2};"></div>
+          </div>
+        `).join('')}
+      </div>
+    ` : '';
     return `
       <div class="product-card">
-        <div class="product-image">${img}</div>
+        <div class="product-image" onclick="openProductModal('${p.id}')" style="cursor: pointer;">${img}</div>
         <div class="product-name">${p.name}</div>
         <div class="product-desc">${p.desc}</div>
         <div class="product-price">R$ ${p.price},00</div>
+        ${colorsHtml}
         <div class="product-buttons">
           <button class="btn-small" onclick="addDirectToCart('${p.id}')">Adicionar</button>
           <button class="btn-small secondary" onclick="selectModel('${p.id}')">Personalizar</button>

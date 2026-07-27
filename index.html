@@ -98,6 +98,35 @@
 
     .cart-icon:hover { color: var(--accent); }
 
+    .header-icons {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .instagram-icon {
+      cursor: pointer;
+      color: var(--ink);
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: color 0.3s;
+      text-decoration: none;
+    }
+
+    .instagram-icon:hover {
+      color: var(--accent);
+    }
+
+    .instagram-icon svg {
+      width: 20px;
+      height: 20px;
+      stroke: currentColor;
+      fill: none;
+    }
+
     .cart-count {
       position: absolute;
       top: -8px;
@@ -1226,9 +1255,18 @@
         <a href="#configurator">Monte sua bolsa</a>
         <a href="#contact">Contato</a>
       </nav>
-      <div class="cart-icon" onclick="toggleCart()">
-        🛍️
-        <div class="cart-count" id="cart-count">0</div>
+      <div class="header-icons">
+        <a href="https://www.instagram.com/breluoficial?utm_source=qr" target="_blank" rel="noopener noreferrer" class="instagram-icon" title="Siga BreLu no Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37Z"></path>
+            <circle cx="17.5" cy="6.5" r="1.5"></circle>
+          </svg>
+        </a>
+        <div class="cart-icon" onclick="toggleCart()">
+          🛍️
+          <div class="cart-count" id="cart-count">0</div>
+        </div>
       </div>
     </div>
   </div>

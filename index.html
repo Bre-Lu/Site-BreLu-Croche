@@ -511,6 +511,9 @@
       object-fit: contain;
       max-width: 90vw;
       max-height: 90vh;
+      transform: scale(1);
+      transform-origin: center;
+      transition: transform 0.2s ease-out;
     }
 
     .lightbox-close {
@@ -1771,6 +1774,9 @@
     
     // Desabilitar scroll da página
     document.body.style.overflow = 'hidden';
+    
+    // Ativar pinch-to-zoom
+    setTimeout(setupLightboxListeners, 100);
   }
 
   function closeLightbox() {
@@ -1973,6 +1979,44 @@
   }
 
   // Atualizar listener de clique na imagem para abrir lightbox
+  // RASTREAMENTO DE TOQUE (para separar clique de swipe)
+  let touchStartX = 0;
+  let touchStartY = 0;
+  let touchMoved = false;
+
+  function handleImageTouchStart(e) {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+    touchMoved = false;
+  }
+
+  function handleImageTouchEnd(e) {
+    // Se houve movimento, não abrir lightbox (era um swipe)
+    if (touchMoved) return;
+    
+    // Se foi apenas um toque (tap), então pode abrir
+    e.preventDefault();
+    handleImageTap(e);
+  }
+
+  function handleImageTouchMove(e) {
+    if (!e.touches || !e.touches.length) return;
+    
+    const touchX = e.touches[0].clientX;
+    const touchY = e.touches[0].clientY;
+    
+    // Se o dedo se moveu mais de 10px, é um swipe, não um tap
+    const deltaX = Math.abs(touchX - touchStartX);
+    const deltaY = Math.abs(touchY - touchStartY);
+    
+    if (deltaX > 10 || deltaY > 10) {
+      touchMoved = true;
+    }
+    
+    // Executar pan normalmente
+    handleImagePan(e);
+  }
+
   function handleImageTap(e) {
     if (isZoomed) {
       toggleImageZoom(e);
@@ -1981,10 +2025,62 @@
     }
   }
 
-  function handleImageTouchEnd(e) {
-    // Evita que o navegador dispare também um "click" sintético duplicado
+  // PINCH-TO-ZOOM NO LIGHTBOX
+  let lightboxZoom = 1;
+  let lightboxInitialDistance = 0;
+
+  function getLightboxImageDistance(touches) {
+    if (touches.length < 2) return 0;
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  function handleLightboxTouchStart(e) {
+    if (e.touches.length === 2) {
+      lightboxInitialDistance = getLightboxImageDistance(e.touches);
+    }
+  }
+
+  function handleLightboxTouchMove(e) {
+    if (e.touches.length !== 2) return;
+    
+    const currentDistance = getLightboxImageDistance(e.touches);
+    if (lightboxInitialDistance === 0) return;
+    
+    const scale = currentDistance / lightboxInitialDistance;
+    lightboxZoom = Math.max(1, Math.min(3, lightboxZoom * scale));
+    
+    const lightboxImage = document.getElementById('lightbox-image');
+    if (lightboxImage) {
+      lightboxImage.style.transform = `scale(${lightboxZoom})`;
+    }
+    
+    lightboxInitialDistance = currentDistance;
     e.preventDefault();
-    handleImageTap(e);
+  }
+
+  function handleLightboxTouchEnd(e) {
+    lightboxInitialDistance = 0;
+  }
+
+  function setupLightboxListeners() {
+    const lightboxModal = document.getElementById('lightbox-modal');
+    if (lightboxModal) {
+      lightboxModal.addEventListener('touchstart', handleLightboxTouchStart, { passive: true });
+      lightboxModal.addEventListener('touchmove', handleLightboxTouchMove, { passive: false });
+      lightboxModal.addEventListener('touchend', handleLightboxTouchEnd, { passive: true });
+    }
+  }
+
+  function closeLightbox() {
+    document.getElementById('lightbox-modal').classList.remove('active');
+    document.body.style.overflow = 'auto';
+    lightboxZoom = 1; // Reset zoom
+    const lightboxImage = document.getElementById('lightbox-image');
+    if (lightboxImage) {
+      lightboxImage.style.transform = 'scale(1)';
+    }
   }
 
   function setupImageZoomListeners() {
@@ -1993,14 +2089,16 @@
       img.removeEventListener('click', handleImageTap);
       img.removeEventListener('mousemove', handleImagePan);
       img.removeEventListener('mouseleave', resetImageOnLeave);
+      img.removeEventListener('touchstart', handleImageTouchStart);
       img.removeEventListener('touchend', handleImageTouchEnd);
-      img.removeEventListener('touchmove', handleImagePan);
+      img.removeEventListener('touchmove', handleImageTouchMove);
       
       img.addEventListener('click', handleImageTap);
       img.addEventListener('mousemove', handleImagePan);
       img.addEventListener('mouseleave', resetImageOnLeave);
-      img.addEventListener('touchend', handleImageTouchEnd);
-      img.addEventListener('touchmove', handleImagePan, { passive: false });
+      img.addEventListener('touchstart', handleImageTouchStart, { passive: true });
+      img.addEventListener('touchend', handleImageTouchEnd, { passive: false });
+      img.addEventListener('touchmove', handleImageTouchMove, { passive: false });
     }
   }
 

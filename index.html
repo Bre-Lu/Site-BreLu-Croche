@@ -347,7 +347,7 @@
 
     .product-image {
       width: 100%;
-      height: 160px;
+      height: 320px;
       background: var(--bg);
       border-radius: 6px;
       display: flex;
@@ -1117,6 +1117,53 @@
       }
       .configurator {
         padding: 28px;
+      }
+
+      /* MELHORIAS PARA MOBILE */
+      .modal-content {
+        width: 98vw;
+        max-height: 90vh;
+        padding: 15px;
+      }
+
+      .carousel-container {
+        height: 450px !important;
+        margin-bottom: 15px;
+      }
+
+      .modal-title {
+        font-size: 18px;
+        margin-bottom: 12px;
+      }
+
+      .modal-price {
+        font-size: 22px;
+        margin-bottom: 15px;
+      }
+
+      .carousel-nav {
+        bottom: 12px;
+      }
+
+      .carousel-nav button {
+        width: 36px;
+        height: 36px;
+        font-size: 16px;
+      }
+    }
+
+    @media (max-width: 900px) and (min-width: 601px) {
+      /* TABLET: aumentar imagens do catálogo */
+      .product-card {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .product-image {
+        width: 100%;
+        height: 400px;
+        object-fit: cover;
+        margin-bottom: 15px;
       }
     }
   </style>

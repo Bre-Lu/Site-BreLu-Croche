@@ -713,6 +713,52 @@
       line-height: 1.8;
     }
 
+    .modal-colors {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .color-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border: 2px solid transparent;
+      border-radius: 6px;
+      cursor: pointer;
+      background: var(--bg);
+      transition: all 0.3s;
+    }
+
+    .color-option:hover {
+      background: var(--card);
+      border-color: var(--accent);
+    }
+
+    .color-option.active {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 2px rgba(196, 112, 122, 0.2);
+    }
+
+    .color-swatch {
+      display: flex;
+      width: 24px;
+      height: 24px;
+      border-radius: 4px;
+      overflow: hidden;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
+    .color-swatch div {
+      flex: 1;
+    }
+
+    .color-option-label {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
     .btn-small {
       flex: 1;
       background: var(--ink);
@@ -1315,6 +1361,10 @@
           <h3>Detalhes</h3>
           <p>✓ Fio 100% resistente<br>✓ Sob encomenda<br>✓ Prazo combinado<br>✓ Disponível em 3 combinações de cores</p>
         </div>
+        <div class="modal-specs">
+          <h3>Cores</h3>
+          <div class="modal-colors" id="modal-colors"></div>
+        </div>
         <div class="modal-quantity">
           <label for="modal-quantity-input">Quantidade:</label>
           <input type="number" id="modal-quantity-input" class="quantity-input" value="1" min="1" max="10">
@@ -1447,6 +1497,36 @@
     document.getElementById('modal-description').textContent = currentProduct.desc;
     document.getElementById('modal-quantity-input').value = 1;
 
+    // Renderizar seletores de cor para #Modelo Teste 01
+    const colorsContainer = document.getElementById('modal-colors');
+    if (productId === 'teste01') {
+      colorsContainer.innerHTML = `
+        <div class="color-option active" data-variant="preto-branco" onclick="selectColorVariant('preto-branco')">
+          <div class="color-swatch">
+            <div style="background: #1a1a1a;"></div>
+            <div style="background: #ffffff;"></div>
+          </div>
+          <span class="color-option-label">Preto + Branco</span>
+        </div>
+        <div class="color-option" data-variant="branco-vermelho" onclick="selectColorVariant('branco-vermelho')">
+          <div class="color-swatch">
+            <div style="background: #ffffff;"></div>
+            <div style="background: #c41e3a;"></div>
+          </div>
+          <span class="color-option-label">Branco + Vermelho</span>
+        </div>
+        <div class="color-option" data-variant="branco-laranja" onclick="selectColorVariant('branco-laranja')">
+          <div class="color-swatch">
+            <div style="background: #ffffff;"></div>
+            <div style="background: #ff8c00;"></div>
+          </div>
+          <span class="color-option-label">Branco + Laranja</span>
+        </div>
+      `;
+    } else {
+      colorsContainer.innerHTML = '';
+    }
+
     // Se tem múltiplas imagens, usar carrossel; senão usar a imagem padrão ou ícone
     if (currentProduct.images && currentProduct.images.length > 0) {
       updateCarouselImage();
@@ -1462,6 +1542,43 @@
     
     // Reinicializar listeners para zoom
     setTimeout(setupImageZoomListeners, 100);
+  }
+
+  // SELETOR DE COR PARA VARIAÇÕES
+  let selectedColorVariant = 'preto-branco';
+  
+  const colorVariants = {
+    'preto-branco': {
+      images: ['modelo-teste-01-frente.jpg', 'modelo-teste-01-detalhe.jpg']
+    },
+    'branco-vermelho': {
+      images: ['modelo-teste-01-frente-vermelho.jpg', 'modelo-teste-01-detalhe-vermelho.jpg']
+    },
+    'branco-laranja': {
+      images: ['modelo-teste-01-frente-laranja.jpg', 'modelo-teste-01-detalhe-laranja.jpg']
+    }
+  };
+
+  function selectColorVariant(variantKey) {
+    if (currentProduct && currentProduct.id === 'teste01') {
+      selectedColorVariant = variantKey;
+      const variant = colorVariants[variantKey];
+      
+      if (variant) {
+        currentProduct.images = variant.images;
+        currentCarouselIndex = 0;
+        updateCarouselImage();
+        updateCarouselDots();
+      }
+      
+      // Atualizar estado visual dos botões
+      document.querySelectorAll('[data-variant]').forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.getAttribute('data-variant') === variantKey) {
+          btn.classList.add('active');
+        }
+      });
+    }
   }
 
   function closeProductModal() {

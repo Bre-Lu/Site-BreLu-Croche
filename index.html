@@ -127,6 +127,214 @@
       fill: none;
     }
 
+    /* WHATSAPP FLUTUANTE */
+    .whatsapp-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 56px;
+      height: 56px;
+      background: #25d366;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1999;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+      text-decoration: none;
+      color: white;
+    }
+
+    .whatsapp-button:hover {
+      background: #20ba58;
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(37, 211, 102, 0.5);
+    }
+
+    .whatsapp-button:active {
+      transform: scale(0.95);
+    }
+
+    .whatsapp-button svg {
+      width: 28px;
+      height: 28px;
+      fill: white;
+    }
+
+    @media (max-width: 600px) {
+      .whatsapp-button {
+        bottom: 15px;
+        right: 15px;
+        width: 50px;
+        height: 50px;
+      }
+
+      .whatsapp-button svg {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    /* SCROLL ANIMATIONS */
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeInScale {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    .animate-on-scroll {
+      animation: fadeInUp 0.8s ease-out forwards;
+      opacity: 0;
+    }
+
+    .product-card.animate-on-scroll {
+      animation: fadeInScale 0.8s ease-out forwards;
+    }
+
+    /* ABOUT BRELU */
+    .about-brelu {
+      padding: 80px 20px;
+      background: linear-gradient(135deg, var(--bg) 0%, #f5f0eb 100%);
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    .about-content h2 {
+      font-size: 36px;
+      color: var(--ink);
+      margin-bottom: 16px;
+    }
+
+    .about-intro {
+      font-size: 16px;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin-bottom: 32px;
+      font-style: italic;
+    }
+
+    .about-section {
+      margin-bottom: 28px;
+    }
+
+    .about-section h3 {
+      font-size: 18px;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .about-section p {
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.8;
+    }
+
+    .about-list {
+      list-style: none;
+      padding: 0;
+    }
+
+    .about-list li {
+      font-size: 14px;
+      color: var(--ink-soft);
+      line-height: 1.8;
+      margin-bottom: 10px;
+    }
+
+    .about-list strong {
+      color: var(--ink);
+    }
+
+    .about-values {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .value-card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      display: flex;
+      gap: 16px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+      transition: transform 0.3s;
+    }
+
+    .value-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .value-icon {
+      font-size: 32px;
+      min-width: 40px;
+      text-align: center;
+    }
+
+    .value-text strong {
+      display: block;
+      color: var(--ink);
+      font-size: 14px;
+      margin-bottom: 4px;
+    }
+
+    .value-text p {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin: 0;
+    }
+
+    @media (max-width: 900px) {
+      .about-brelu {
+        padding: 60px 20px;
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+
+      .about-content h2 {
+        font-size: 28px;
+      }
+
+      .about-values {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .testimonial-card.animate-on-scroll {
+      animation: fadeInUp 0.8s ease-out forwards;
+    }
+
+    // Remover observador de testimonials
+    // document.querySelectorAll('.testimonial-card').forEach(card => {
+    //   observer.observe(card);
+    // });
+
     .cart-count {
       position: absolute;
       top: -8px;
@@ -412,6 +620,19 @@
       margin-bottom: 16px;
     }
 
+    .product-badges {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      margin-bottom: 16px;
+    }
+
+    .badge {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
     .product-colors {
       display: flex;
       gap: 6px;
@@ -596,6 +817,64 @@
       padding: 40px;
       max-height: 90vh;
       overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .breadcrumb {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    .breadcrumb a {
+      color: var(--accent);
+      text-decoration: none;
+      cursor: pointer;
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    .product-rating {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .rating-stars {
+      font-size: 16px;
+    }
+
+    .rating-text {
+      font-size: 12px;
+      color: var(--ink-soft);
+    }
+
+    .product-rating-card {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+
+    .product-rating-card .rating-stars {
+      font-size: 14px;
+    }
+
+    .rating-count {
+      color: var(--ink-soft);
+      font-size: 12px;
     }
 
     .modal-header {
@@ -1253,6 +1532,148 @@
         margin-bottom: 15px;
       }
     }
+
+    /* CHECKOUT MODAL */
+    .checkout-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 3000;
+      padding: 20px;
+    }
+
+    .checkout-modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .checkout-content {
+      background: white;
+      border-radius: 12px;
+      padding: 40px;
+      max-width: 500px;
+      width: 100%;
+      position: relative;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .checkout-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: none;
+      border: none;
+      font-size: 28px;
+      color: var(--ink);
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .checkout-close:hover {
+      color: var(--accent);
+    }
+
+    .checkout-content h2 {
+      font-size: 28px;
+      color: var(--ink);
+      margin-bottom: 24px;
+      margin-top: 0;
+    }
+
+    .checkout-summary {
+      background: var(--bg);
+      padding: 16px;
+      border-radius: 8px;
+      margin-bottom: 24px;
+    }
+
+    .checkout-item {
+      display: flex;
+      justify-content: space-between;
+      font-size: 14px;
+      color: var(--ink-soft);
+      margin-bottom: 12px;
+    }
+
+    .checkout-item.total {
+      border-top: 1px solid #ddd;
+      padding-top: 12px;
+      margin-top: 12px;
+      margin-bottom: 0;
+      color: var(--ink);
+    }
+
+    .checkout-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-group label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    .form-group input {
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-size: 14px;
+      font-family: inherit;
+    }
+
+    .form-group input:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(196, 112, 122, 0.1);
+    }
+
+    .checkout-button {
+      background: var(--accent);
+      color: white;
+      padding: 14px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+      margin-top: 8px;
+    }
+
+    .checkout-button:hover {
+      background: #b25c5d;
+    }
+
+    .checkout-info {
+      font-size: 12px;
+      color: var(--ink-soft);
+      margin-top: 16px;
+      line-height: 1.6;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .checkout-content {
+        padding: 24px 16px;
+      }
+
+      .checkout-content h2 {
+        font-size: 22px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -1265,6 +1686,7 @@
       <nav class="nav-links">
         <a href="#catalog">Catálogo</a>
         <a href="#configurator">Monte sua bolsa</a>
+        <a href="#quem-somos">Quem Somos</a>
         <a href="#contact">Contato</a>
       </nav>
       <div class="header-icons">
@@ -1387,7 +1809,16 @@
 <div class="product-modal" id="product-modal">
   <div class="modal-content">
     <div class="modal-header">
+      <div class="breadcrumb" id="modal-breadcrumb">
+        <a href="#">Home</a> > 
+        <a href="#catalog">Catálogo</a> > 
+        <span id="breadcrumb-product">Produto</span>
+      </div>
       <h2 id="modal-product-name">Tote Clássica</h2>
+      <div class="product-rating">
+        <span class="rating-stars" id="modal-rating-stars">⭐⭐⭐⭐⭐</span>
+        <span class="rating-text" id="modal-rating-text">4.8 (15 avaliações)</span>
+      </div>
       <button class="modal-close" onclick="closeProductModal()">×</button>
     </div>
     <div class="modal-body">
@@ -1425,6 +1856,13 @@
   </div>
 </div>
 
+<!-- WHATSAPP FLUTUANTE -->
+<a href="https://wa.me/5511999999999?text=Olá%20BreLu!%20Gostaria%20de%20saber%20mais%20sobre%20as%20bolsas" target="_blank" rel="noopener noreferrer" class="whatsapp-button" title="Conversar com BreLu no WhatsApp">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.67-.51-.173-.008-.371 0-.57 0-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.076 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421-7.403h-.004a8.06 8.06 0 00-8.062 8.062c0 1.42.369 2.805 1.069 4.011L3.217 21.75l4.404-1.157a8.062 8.062 0 004.212 1.08h.006c4.455 0 8.067-3.612 8.067-8.066 0-2.146-.831-4.158-2.337-5.663-1.506-1.505-3.518-2.338-5.664-2.338z"/>
+  </svg>
+</a>
+
 <!-- LIGHTBOX FULL SCREEN -->
 <div class="lightbox-modal" id="lightbox-modal">
   <button class="lightbox-close" onclick="closeLightbox()">✕</button>
@@ -1435,6 +1873,55 @@
       <button onclick="nextLightboxImage()">→</button>
     </div>
     <div class="lightbox-info" id="lightbox-info"></div>
+  </div>
+</div>
+
+<!-- CHECKOUT MODAL -->
+<div class="checkout-modal" id="checkout-modal">
+  <div class="checkout-content">
+    <button class="checkout-close" onclick="closeCheckoutModal()">✕</button>
+    <h2>Finalizando sua compra</h2>
+    
+    <div class="checkout-summary">
+      <div class="checkout-item">
+        <span>Sua bolsa:</span>
+        <span id="checkout-description" style="font-weight: 600;"></span>
+      </div>
+      <div class="checkout-item total">
+        <span>Total:</span>
+        <span id="checkout-total" style="font-size: 20px; font-weight: 600; color: var(--accent);"></span>
+      </div>
+    </div>
+
+    <form class="checkout-form" onsubmit="event.preventDefault(); submitCheckout();">
+      <div class="form-group">
+        <label for="checkout-name">Nome Completo *</label>
+        <input type="text" id="checkout-name" required placeholder="Seu nome">
+      </div>
+
+      <div class="form-group">
+        <label for="checkout-email">Email *</label>
+        <input type="email" id="checkout-email" required placeholder="seu@email.com">
+      </div>
+
+      <div class="form-group">
+        <label for="checkout-phone">WhatsApp (com DDD) *</label>
+        <input type="tel" id="checkout-phone" required placeholder="11999999999">
+      </div>
+
+      <input type="hidden" id="checkout-items">
+      <input type="hidden" id="checkout-total-input">
+
+      <button type="submit" class="checkout-button">
+        Pagar com Asaas
+      </button>
+      
+      <p class="checkout-info">
+        ✓ Pagamento seguro via Asaas<br>
+        ✓ Cartão, PIX ou Boleto<br>
+        ✓ Você receberá confirmação no email e WhatsApp
+      </p>
+    </form>
   </div>
 </div>
 
@@ -1462,6 +1949,75 @@
     </div>
   </div>
 </footer>
+
+<!-- QUEM SOMOS -->
+<section id="quem-somos" class="about-brelu">
+  <div class="container">
+    <div class="about-grid">
+      <div class="about-content">
+        <h2>Sobre BreLu</h2>
+        <p class="about-intro">Cada bolsa é mais que um acessório — é uma história de dedicação, qualidade e amor aos detalhes.</p>
+        
+        <div class="about-section">
+          <h3>🎯 Nossa História</h3>
+          <p>BreLu nasceu da paixão por crochê e da vontade de criar peças únicas que combinam beleza e funcionalidade. Cada bolsa é handmade com fio 100% resistente, pronta para acompanhar você no dia a dia.</p>
+        </div>
+
+        <div class="about-section">
+          <h3>💎 Por que Escolher BreLu?</h3>
+          <ul class="about-list">
+            <li>✓ <strong>Qualidade Artesanal:</strong> Cada bolsa é feita à mão com cuidado especial</li>
+            <li>✓ <strong>Fio 100% Resistente:</strong> Durabilidade garantida para anos de uso</li>
+            <li>✓ <strong>Personalizável:</strong> Escolha cores e modelos que combinam com seu estilo</li>
+            <li>✓ <strong>Sob Encomenda:</strong> Prazo combinado conforme sua necessidade</li>
+            <li>✓ <strong>Suporte Direto:</strong> Fale conosco no WhatsApp para dúvidas</li>
+          </ul>
+        </div>
+
+        <div class="about-section">
+          <h3>🌟 Nossa Missão</h3>
+          <p>Levar moda artesanal de qualidade para quem valoriza peças únicas e sustentáveis, criando acessórios que duram e fazem diferença.</p>
+        </div>
+      </div>
+
+      <div class="about-visual">
+        <div class="about-values">
+          <div class="value-card">
+            <div class="value-icon">🎨</div>
+            <div class="value-text">
+              <strong>Design</strong>
+              <p>Peças únicas com cores e combinações personalizadas</p>
+            </div>
+          </div>
+
+          <div class="value-card">
+            <div class="value-icon">💪</div>
+            <div class="value-text">
+              <strong>Durabilidade</strong>
+              <p>Fio resistente que acompanha você por anos</p>
+            </div>
+          </div>
+
+          <div class="value-card">
+            <div class="value-icon">🤝</div>
+            <div class="value-text">
+              <strong>Relacionamento</strong>
+              <p>Suporte próximo e atento ao cliente</p>
+            </div>
+          </div>
+
+          <div class="value-card">
+            <div class="value-icon">♻️</div>
+            <div class="value-text">
+              <strong>Sustentabilidade</strong>
+              <p>Produção consciente e artesanal</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <script>
   // DADOS
@@ -1542,7 +2098,12 @@
     
     if (!currentProduct) return;
 
+    // Atualizar breadcrumb
+    document.getElementById('breadcrumb-product').textContent = currentProduct.name;
+
     document.getElementById('modal-product-name').textContent = currentProduct.name;
+    document.getElementById('modal-rating-stars').textContent = '⭐⭐⭐⭐⭐';
+    document.getElementById('modal-rating-text').textContent = '4.8 (15 avaliações)';
     document.getElementById('modal-price').textContent = `R$ ${currentProduct.price},00`;
     document.getElementById('modal-description').textContent = currentProduct.desc;
     document.getElementById('modal-quantity-input').value = 1;
@@ -1759,7 +2320,10 @@
     }
   }
 
-  document.addEventListener('DOMContentLoaded', setupImageZoomListeners);
+  document.addEventListener('DOMContentLoaded', function() {
+    setupImageZoomListeners();
+    initScrollAnimations();
+  });
 
   // LIGHTBOX FULL SCREEN
   let lightboxIndex = 0;
@@ -1885,11 +2449,56 @@
       return;
     }
 
-    const total = cart.reduce((sum, item) => sum + item.price, 0);
-    const description = cart.map(item => `${item.model} (${item.colors})`).join(', ');
+    const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    const description = cart.map(item => `${item.model} (${item.colors}) x${item.quantity}`).join('; ');
+    
+    // Abrir modal de checkout
+    showCheckoutModal(description, total);
+  }
 
-    // LINK DO ASAAS - SUBSTITUA COM SEU LINK REAL
-    const asaasLink = `https://www.asaas.com/COLOQUE_SEU_LINK_AQUI?description=${encodeURIComponent(description)}&value=${total}`;
+  function showCheckoutModal(description, total) {
+    const modal = document.getElementById('checkout-modal');
+    if (!modal) return;
+    
+    document.getElementById('checkout-description').textContent = description;
+    document.getElementById('checkout-total').textContent = `R$ ${total.toFixed(2)}`;
+    document.getElementById('checkout-items').value = JSON.stringify(cart);
+    document.getElementById('checkout-total-input').value = total;
+    
+    modal.classList.add('active');
+  }
+
+  function closeCheckoutModal() {
+    const modal = document.getElementById('checkout-modal');
+    if (modal) {
+      modal.classList.remove('active');
+    }
+  }
+
+  function submitCheckout() {
+    const email = document.getElementById('checkout-email').value;
+    const phone = document.getElementById('checkout-phone').value;
+    const name = document.getElementById('checkout-name').value;
+    const total = document.getElementById('checkout-total-input').value;
+
+    // Validar campos
+    if (!name || !email || !phone) {
+      alert('Por favor, preencha todos os campos');
+      return;
+    }
+
+    if (!email.includes('@')) {
+      alert('Por favor, insira um email válido');
+      return;
+    }
+
+    // Link Asaas - substitua COLOQUE_SEU_LINK_AQUI pelo seu link real
+    const asaasLink = `https://www.asaas.com/COLOQUE_SEU_LINK_AQUI?name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&phone=${encodeURIComponent(phone)}&value=${total}`;
+
+    // Salvar dados localmente antes de redirecionar
+    localStorage.setItem('brelu_checkout', JSON.stringify({
+      name, email, phone, total, cart: cart, timestamp: new Date().toISOString()
+    }));
 
     window.location.href = asaasLink;
   }
@@ -1926,6 +2535,14 @@
         <div class="product-name">${p.name}</div>
         <div class="product-desc">${p.desc}</div>
         <div class="product-price">R$ ${p.price},00</div>
+        <div class="product-rating-card">
+          <span class="rating-stars">⭐⭐⭐⭐⭐</span>
+          <span class="rating-count">4.8 (15)</span>
+        </div>
+        <div class="product-badges">
+          <span class="badge">✓ Fio 100% Resistente</span>
+          <span class="badge">✓ Sob Encomenda</span>
+        </div>
         ${colorsHtml}
         <div class="product-buttons">
           <button class="btn-small" onclick="addDirectToCart('${p.id}')">Adicionar</button>
@@ -2144,6 +2761,33 @@
       img.addEventListener('touchend', handleImageTouchEnd, { passive: false });
       img.addEventListener('touchmove', handleImageTouchMove, { passive: false });
     }
+  }
+
+  // SCROLL ANIMATIONS
+  function initScrollAnimations() {
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -100px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('animate-on-scroll');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, observerOptions);
+
+    // Animar cards de produtos
+    document.querySelectorAll('.product-card').forEach(card => {
+      observer.observe(card);
+    });
+
+    // Animar cards de depoimentos
+    document.querySelectorAll('.testimonial-card').forEach(card => {
+      observer.observe(card);
+    });
   }
 
   // INICIALIZAR

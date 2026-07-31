@@ -877,6 +877,202 @@
       font-size: 12px;
     }
 
+    /* MODAL REVIEWS */
+    .modal-reviews {
+      margin-top: 28px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+    }
+
+    .reviews-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .reviews-header h3 {
+      font-size: 16px;
+      color: var(--ink);
+      margin: 0;
+    }
+
+    .btn-review {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 4px;
+      font-size: 12px;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .btn-review:hover {
+      background: #b25c5d;
+    }
+
+    .reviews-list {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+
+    .review-item {
+      background: var(--bg);
+      padding: 12px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+
+    .review-rating {
+      font-size: 14px;
+      margin-bottom: 6px;
+    }
+
+    .review-author {
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--ink);
+    }
+
+    .review-text {
+      font-size: 13px;
+      color: var(--ink-soft);
+      margin-top: 6px;
+      line-height: 1.5;
+    }
+
+    .review-date {
+      font-size: 11px;
+      color: #999;
+      margin-top: 6px;
+    }
+
+    .no-reviews {
+      text-align: center;
+      color: var(--ink-soft);
+      font-size: 13px;
+      padding: 20px;
+    }
+
+    /* REVIEW FORM MODAL */
+    .review-modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 3500;
+      padding: 20px;
+    }
+
+    .review-modal.active {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .review-form-content {
+      background: white;
+      border-radius: 12px;
+      padding: 32px;
+      max-width: 500px;
+      width: 100%;
+      position: relative;
+    }
+
+    .review-form-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: none;
+      border: none;
+      font-size: 24px;
+      cursor: pointer;
+      color: var(--ink);
+    }
+
+    .review-form-content h2 {
+      font-size: 22px;
+      color: var(--ink);
+      margin-bottom: 20px;
+      margin-top: 0;
+    }
+
+    .form-group-review {
+      margin-bottom: 16px;
+    }
+
+    .form-group-review label {
+      display: block;
+      font-weight: 600;
+      font-size: 13px;
+      color: var(--ink);
+      margin-bottom: 6px;
+    }
+
+    .star-rating {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+
+    .star-rating button {
+      background: none;
+      border: none;
+      font-size: 28px;
+      cursor: pointer;
+      opacity: 0.4;
+      transition: opacity 0.2s;
+    }
+
+    .star-rating button:hover,
+    .star-rating button.active {
+      opacity: 1;
+    }
+
+    .review-form-content input,
+    .review-form-content textarea {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 13px;
+      box-sizing: border-box;
+    }
+
+    .review-form-content textarea {
+      resize: vertical;
+      min-height: 100px;
+    }
+
+    .review-form-content input:focus,
+    .review-form-content textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(196, 112, 122, 0.1);
+    }
+
+    .review-submit {
+      background: var(--accent);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      width: 100%;
+      margin-top: 16px;
+      transition: background 0.3s;
+    }
+
+    .review-submit:hover {
+      background: #b25c5d;
+    }
+
     .modal-header {
       display: flex;
       justify-content: space-between;
@@ -1815,10 +2011,6 @@
         <span id="breadcrumb-product">Produto</span>
       </div>
       <h2 id="modal-product-name">Tote Clássica</h2>
-      <div class="product-rating">
-        <span class="rating-stars" id="modal-rating-stars">⭐⭐⭐⭐⭐</span>
-        <span class="rating-text" id="modal-rating-text">4.8 (15 avaliações)</span>
-      </div>
       <button class="modal-close" onclick="closeProductModal()">×</button>
     </div>
     <div class="modal-body">
@@ -1851,8 +2043,58 @@
           <input type="number" id="modal-quantity-input" class="quantity-input" value="1" min="1" max="10">
         </div>
         <button class="modal-add-cart" onclick="addFromModal()">Adicionar ao carrinho</button>
+        
+        <!-- SEÇÃO DE AVALIAÇÕES -->
+        <div class="modal-reviews">
+          <div class="reviews-header">
+            <h3>Avaliações dos Clientes</h3>
+            <button class="btn-review" onclick="openReviewModal()">Deixe uma avaliação</button>
+          </div>
+          <div class="reviews-list" id="reviews-list">
+            <p class="no-reviews">Seja o primeiro a avaliar este produto!</p>
+          </div>
+        </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- REVIEW FORM MODAL -->
+<div class="review-modal" id="review-modal">
+  <div class="review-form-content">
+    <button class="review-form-close" onclick="closeReviewModal()">×</button>
+    <h2>Deixe sua avaliação</h2>
+    
+    <form class="review-form" onsubmit="submitReview(event)">
+      <div class="form-group-review">
+        <label>Seu nome *</label>
+        <input type="text" id="review-name" placeholder="Seu nome" required>
+      </div>
+
+      <div class="form-group-review">
+        <label>Email *</label>
+        <input type="email" id="review-email" placeholder="seu@email.com" required>
+      </div>
+
+      <div class="form-group-review">
+        <label>Sua avaliação *</label>
+        <div class="star-rating" id="star-rating">
+          <button type="button" class="star-btn" data-rating="1">★</button>
+          <button type="button" class="star-btn" data-rating="2">★</button>
+          <button type="button" class="star-btn" data-rating="3">★</button>
+          <button type="button" class="star-btn" data-rating="4">★</button>
+          <button type="button" class="star-btn" data-rating="5">★</button>
+        </div>
+        <input type="hidden" id="review-rating" value="0" required>
+      </div>
+
+      <div class="form-group-review">
+        <label>Sua opinião *</label>
+        <textarea id="review-text" placeholder="O que você achou da bolsa?" required></textarea>
+      </div>
+
+      <button type="submit" class="review-submit">Enviar avaliação</button>
+    </form>
   </div>
 </div>
 
@@ -2103,11 +2345,12 @@
     document.getElementById('breadcrumb-product').textContent = currentProduct.name;
 
     document.getElementById('modal-product-name').textContent = currentProduct.name;
-    document.getElementById('modal-rating-stars').textContent = '⭐⭐⭐⭐⭐';
-    document.getElementById('modal-rating-text').textContent = '4.8 (15 avaliações)';
     document.getElementById('modal-price').textContent = `R$ ${currentProduct.price},00`;
     document.getElementById('modal-description').textContent = currentProduct.desc;
     document.getElementById('modal-quantity-input').value = 1;
+
+    // Exibir reviews do produto
+    displayProductReviews();
 
     // Renderizar seletores de cor para #Modelo Teste 01
     const colorsContainer = document.getElementById('modal-colors');
@@ -2324,6 +2567,7 @@
   document.addEventListener('DOMContentLoaded', function() {
     setupImageZoomListeners();
     initScrollAnimations();
+    setupStarRating();
   });
 
   // LIGHTBOX FULL SCREEN
@@ -2536,10 +2780,6 @@
         <div class="product-name">${p.name}</div>
         <div class="product-desc">${p.desc}</div>
         <div class="product-price">R$ ${p.price},00</div>
-        <div class="product-rating-card">
-          <span class="rating-stars">⭐⭐⭐⭐⭐</span>
-          <span class="rating-count">4.8 (15)</span>
-        </div>
         <div class="product-badges">
           <span class="badge">✓ Fio 100% Resistente</span>
           <span class="badge">✓ Sob Encomenda</span>
@@ -2789,6 +3029,116 @@
     document.querySelectorAll('.testimonial-card').forEach(card => {
       observer.observe(card);
     });
+  }
+
+  // SISTEMA DE AVALIAÇÕES
+  let productReviews = JSON.parse(localStorage.getItem('breluReviews')) || {};
+  let currentReviewRating = 0;
+
+  function openReviewModal() {
+    document.getElementById('review-modal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+    currentReviewRating = 0;
+    document.getElementById('review-rating').value = 0;
+    document.querySelectorAll('.star-btn').forEach(btn => btn.classList.remove('active'));
+  }
+
+  function closeReviewModal() {
+    document.getElementById('review-modal').classList.remove('active');
+    document.body.style.overflow = 'auto';
+  }
+
+  // Setup de ratings com stars
+  function setupStarRating() {
+    document.querySelectorAll('.star-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        currentReviewRating = parseInt(btn.dataset.rating);
+        document.getElementById('review-rating').value = currentReviewRating;
+        
+        document.querySelectorAll('.star-btn').forEach((b, idx) => {
+          if (idx < currentReviewRating) {
+            b.classList.add('active');
+          } else {
+            b.classList.remove('active');
+          }
+        });
+      });
+    });
+  }
+
+  function submitReview(e) {
+    e.preventDefault();
+    
+    if (!currentProduct) return;
+    
+    const name = document.getElementById('review-name').value;
+    const email = document.getElementById('review-email').value;
+    const rating = parseInt(document.getElementById('review-rating').value);
+    const text = document.getElementById('review-text').value;
+
+    if (!rating) {
+      alert('Por favor, selecione uma classificação');
+      return;
+    }
+
+    // Salvar review
+    if (!productReviews[currentProduct.id]) {
+      productReviews[currentProduct.id] = [];
+    }
+
+    productReviews[currentProduct.id].push({
+      name,
+      email,
+      rating,
+      text,
+      date: new Date().toLocaleDateString('pt-BR')
+    });
+
+    localStorage.setItem('breluReviews', JSON.stringify(productReviews));
+
+    // Atualizar lista de reviews
+    displayProductReviews();
+
+    // Fechar modal e limpar form
+    closeReviewModal();
+    document.getElementById('review-name').value = '';
+    document.getElementById('review-email').value = '';
+    document.getElementById('review-text').value = '';
+    
+    alert('Obrigado! Sua avaliação foi registrada com sucesso!');
+  }
+
+  function displayProductReviews() {
+    if (!currentProduct) return;
+
+    const reviews = productReviews[currentProduct.id] || [];
+    const reviewsList = document.getElementById('reviews-list');
+
+    if (reviews.length === 0) {
+      reviewsList.innerHTML = '<p class="no-reviews">Seja o primeiro a avaliar este produto!</p>';
+      return;
+    }
+
+    reviewsList.innerHTML = reviews.map(review => `
+      <div class="review-item">
+        <div class="review-rating">${'★'.repeat(review.rating)}${'☆'.repeat(5 - review.rating)}</div>
+        <div class="review-author">${escapeHtml(review.name)}</div>
+        <div class="review-text">${escapeHtml(review.text)}</div>
+        <div class="review-date">${review.date}</div>
+      </div>
+    `).join('');
+  }
+
+  function escapeHtml(text) {
+    const map = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#039;'
+    };
+    return text.replace(/[&<>"']/g, m => map[m]);
   }
 
   // INICIALIZAR

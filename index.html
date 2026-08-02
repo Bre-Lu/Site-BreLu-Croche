@@ -2577,6 +2577,12 @@
 </footer>
 
 <script>
+  // VARIÁVEIS GLOBAIS - MONTE SUA BOLSA
+  let monte_cor1 = '#ff8c00';
+  let monte_cor2 = '#ffffff';
+  let monte_cor1Nome = 'Laranja';
+  let monte_cor2Nome = 'Branco';
+
   // DADOS
   const products = [
     { 
@@ -3456,11 +3462,6 @@
   }
 
   // MONTE SUA BOLSA - JAVASCRIPT
-  let monte_cor1 = '#ff8c00';
-  let monte_cor2 = '#ffffff';
-  let monte_cor1Nome = 'Laranja';
-  let monte_cor2Nome = 'Branco';
-
   function monte_selecionarCor1(cor, nome, btnElement) {
     monte_cor1 = cor;
     monte_cor1Nome = nome;
@@ -3503,9 +3504,13 @@
   }
 
   function monte_atualizar() {
-    document.getElementById('cor1PreviewSmall').style.backgroundColor = monte_cor1;
-    document.getElementById('cor2PreviewSmall').style.backgroundColor = monte_cor2;
-    document.getElementById('monte_resumoNomes').textContent = `${monte_cor1Nome} + ${monte_cor2Nome}`;
+    const cor1Display = document.getElementById('cor1PreviewSmall');
+    const cor2Display = document.getElementById('cor2PreviewSmall');
+    const resumoNomes = document.getElementById('monte_resumoNomes');
+    
+    if (cor1Display) cor1Display.style.backgroundColor = monte_cor1;
+    if (cor2Display) cor2Display.style.backgroundColor = monte_cor2;
+    if (resumoNomes) resumoNomes.textContent = `${monte_cor1Nome} + ${monte_cor2Nome}`;
     
     monte_atualizarPreco();
   }
@@ -3514,49 +3519,78 @@
     let detalhes = [];
     let preco = 169;
     
-    if (document.getElementById('monte_detailBolsinha').checked) {
+    const bolsinha = document.getElementById('monte_detailBolsinha');
+    const tassel = document.getElementById('monte_detailTassel');
+    const cordao = document.getElementById('monte_detailCordao');
+    const revestimento = document.getElementById('monte_detailRevestimento');
+    
+    if (bolsinha && bolsinha.checked) {
       detalhes.push('Bolsinha');
       preco += 20;
     }
-    if (document.getElementById('monte_detailTassel').checked) {
+    if (tassel && tassel.checked) {
       detalhes.push('Tassel');
       preco += 15;
     }
-    if (document.getElementById('monte_detailCordao').checked) {
+    if (cordao && cordao.checked) {
       detalhes.push('Cordão');
       preco += 10;
     }
-    if (document.getElementById('monte_detailRevestimento').checked) {
+    if (revestimento && revestimento.checked) {
       detalhes.push('Revestimento');
       preco += 25;
     }
     
-    document.getElementById('monte_resumoDetalhes').textContent = detalhes.length > 0 ? detalhes.join(' + ') : 'Básico';
-    document.getElementById('monte_precoFinal').textContent = preco.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+    const detalhesEl = document.getElementById('monte_resumoDetalhes');
+    const precoEl = document.getElementById('monte_precoFinal');
+    
+    if (detalhesEl) detalhesEl.textContent = detalhes.length > 0 ? detalhes.join(' + ') : 'Básico';
+    if (precoEl) precoEl.textContent = preco.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
   }
 
   function monte_resetar() {
     monte_preset('#ff8c00', '#ffffff', 'Laranja', 'Branco');
-    document.getElementById('monte_detailBolsinha').checked = true;
-    document.getElementById('monte_detailTassel').checked = true;
-    document.getElementById('monte_detailCordao').checked = true;
-    document.getElementById('monte_detailRevestimento').checked = true;
+    
+    const bolsinha = document.getElementById('monte_detailBolsinha');
+    const tassel = document.getElementById('monte_detailTassel');
+    const cordao = document.getElementById('monte_detailCordao');
+    const revestimento = document.getElementById('monte_detailRevestimento');
+    
+    if (bolsinha) bolsinha.checked = true;
+    if (tassel) tassel.checked = true;
+    if (cordao) cordao.checked = true;
+    if (revestimento) revestimento.checked = true;
+    
     monte_atualizarPreco();
   }
 
   function monte_addCarrinho() {
     const descricao = `Monte sua Bolsa: ${monte_cor1Nome} + ${monte_cor2Nome}`;
-    const preco = parseFloat(document.getElementById('monte_precoFinal').textContent.replace(',', '.'));
+    const precoEl = document.getElementById('monte_precoFinal');
     
-    addProductToCart({
-      id: 'monte-bolsa-' + Date.now(),
-      name: descricao,
-      price: preco,
-      image: 'modelo-teste-01-frente-laranja.jpg',
-      quantity: 1
-    });
+    if (!precoEl) {
+      alert('Erro: Elemento de preço não encontrado');
+      return;
+    }
     
-    alert('✅ Bolsa adicionada ao carrinho! 🛍️');
+    const preco = parseFloat(precoEl.textContent.replace(',', '.'));
+    
+    // Verificar se addProductToCart existe
+    if (typeof addProductToCart === 'function') {
+      addProductToCart({
+        id: 'monte-bolsa-' + Date.now(),
+        name: descricao,
+        price: preco,
+        image: 'modelo-teste-01-frente-laranja.jpg',
+        quantity: 1
+      });
+      
+      alert('✅ Bolsa adicionada ao carrinho! 🛍️');
+    } else {
+      alert('Erro: Carrinho não está disponível');
+      return;
+    }
+    
     monte_resetar();
   }
 
@@ -3566,7 +3600,11 @@
     document.getElementById('monte_detailTassel').addEventListener('change', monte_atualizarPreco);
     document.getElementById('monte_detailCordao').addEventListener('change', monte_atualizarPreco);
     document.getElementById('monte_detailRevestimento').addEventListener('change', monte_atualizarPreco);
-    monte_atualizar();
+    
+    // Chamar monte_atualizar apenas se os elementos existirem
+    if (document.getElementById('cor1PreviewSmall')) {
+      monte_atualizar();
+    }
   }
 
   // INICIALIZAR

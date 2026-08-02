@@ -2247,10 +2247,10 @@
         <div class="config-box">
           <h3>Cor 1 (Principal)</h3>
           <div class="cores-buttons">
-            <button class="cor-btn selected" onclick="monte_selecionarCor1('#ff8c00', 'Laranja')" style="background: #ff8c00; color: white;">Laranja</button>
-            <button class="cor-btn" onclick="monte_selecionarCor1('#c41e3a', 'Vermelho')" style="background: #c41e3a; color: white;">Vermelho</button>
-            <button class="cor-btn" onclick="monte_selecionarCor1('#000000', 'Preto')" style="background: #000000; color: white;">Preto</button>
-            <button class="cor-btn" onclick="monte_selecionarCor1('#d4af8f', 'Bege')" style="background: #d4af8f; color: white;">Bege</button>
+            <button class="cor-btn selected" onclick="monte_selecionarCor1('#ff8c00', 'Laranja', this)" style="background: #ff8c00; color: white;">Laranja</button>
+            <button class="cor-btn" onclick="monte_selecionarCor1('#c41e3a', 'Vermelho', this)" style="background: #c41e3a; color: white;">Vermelho</button>
+            <button class="cor-btn" onclick="monte_selecionarCor1('#000000', 'Preto', this)" style="background: #000000; color: white;">Preto</button>
+            <button class="cor-btn" onclick="monte_selecionarCor1('#d4af8f', 'Bege', this)" style="background: #d4af8f; color: white;">Bege</button>
           </div>
         </div>
 
@@ -2258,10 +2258,10 @@
         <div class="config-box">
           <h3>Cor 2 (Secundária)</h3>
           <div class="cores-buttons">
-            <button class="cor-btn selected" onclick="monte_selecionarCor2('#ffffff', 'Branco')" style="background: #ffffff; color: #333; border: 2px solid #e0e0e0;">Branco</button>
-            <button class="cor-btn" onclick="monte_selecionarCor2('#ff8c00', 'Laranja')" style="background: #ff8c00; color: white;">Laranja</button>
-            <button class="cor-btn" onclick="monte_selecionarCor2('#c41e3a', 'Vermelho')" style="background: #c41e3a; color: white;">Vermelho</button>
-            <button class="cor-btn" onclick="monte_selecionarCor2('#d4af8f', 'Bege')" style="background: #d4af8f; color: white;">Bege</button>
+            <button class="cor-btn selected" onclick="monte_selecionarCor2('#ffffff', 'Branco', this)" style="background: #ffffff; color: #333; border: 2px solid #e0e0e0;">Branco</button>
+            <button class="cor-btn" onclick="monte_selecionarCor2('#ff8c00', 'Laranja', this)" style="background: #ff8c00; color: white;">Laranja</button>
+            <button class="cor-btn" onclick="monte_selecionarCor2('#c41e3a', 'Vermelho', this)" style="background: #c41e3a; color: white;">Vermelho</button>
+            <button class="cor-btn" onclick="monte_selecionarCor2('#d4af8f', 'Bege', this)" style="background: #d4af8f; color: white;">Bege</button>
           </div>
         </div>
 
@@ -3461,26 +3461,30 @@
   let monte_cor1Nome = 'Laranja';
   let monte_cor2Nome = 'Branco';
 
-  function monte_selecionarCor1(cor, nome) {
+  function monte_selecionarCor1(cor, nome, btnElement) {
     monte_cor1 = cor;
     monte_cor1Nome = nome;
     
-    document.querySelectorAll('.config-box:nth-child(1) .cor-btn').forEach(btn => {
+    // Remover selected de todos os botões de Cor 1
+    const cor1Box = btnElement.closest('.config-box');
+    cor1Box.querySelectorAll('.cor-btn').forEach(btn => {
       btn.classList.remove('selected');
     });
-    event.target.closest('.cor-btn').classList.add('selected');
+    btnElement.classList.add('selected');
     
     monte_atualizar();
   }
 
-  function monte_selecionarCor2(cor, nome) {
+  function monte_selecionarCor2(cor, nome, btnElement) {
     monte_cor2 = cor;
     monte_cor2Nome = nome;
     
-    document.querySelectorAll('.config-box:nth-child(2) .cor-btn').forEach(btn => {
+    // Remover selected de todos os botões de Cor 2
+    const cor2Box = btnElement.closest('.config-box');
+    cor2Box.querySelectorAll('.cor-btn').forEach(btn => {
       btn.classList.remove('selected');
     });
-    event.target.closest('.cor-btn').classList.add('selected');
+    btnElement.classList.add('selected');
     
     monte_atualizar();
   }

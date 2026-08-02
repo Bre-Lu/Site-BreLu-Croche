@@ -1620,6 +1620,266 @@
       color: #8b7d6b;
     }
 
+    /* MONTE SUA BOLSA - CSS */
+    .monte-bolsa-section {
+      background: linear-gradient(135deg, #f5f0eb 0%, #ede6dc 100%) !important;
+      color: #3b2a20 !important;
+      padding: 40px !important;
+    }
+
+    .monte-bolsa-section h2 {
+      color: #3b2a20 !important;
+      text-align: center;
+      margin-bottom: 8px !important;
+    }
+
+    .section-subtitle {
+      text-align: center;
+      color: #666 !important;
+      margin-bottom: 40px !important;
+      font-size: 14px;
+    }
+
+    .monte-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .monte-preview {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+      text-align: center;
+    }
+
+    .preview-label {
+      font-size: 12px;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 16px;
+    }
+
+    .cores-preview {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .cor-preview {
+      width: 40px;
+      height: 40px;
+      border-radius: 6px;
+      border: 2px solid #e0e0e0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      color: white;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+      font-weight: 600;
+    }
+
+    .plus-sign {
+      color: #c4707a;
+      font-weight: 600;
+    }
+
+    .bolsa-preview-area {
+      width: 100%;
+      height: 400px;
+      background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      margin-bottom: 20px;
+    }
+
+    .preview-image {
+      max-width: 90%;
+      max-height: 90%;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
+    }
+
+    .monte-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .config-box {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    }
+
+    .config-box h3 {
+      font-size: 14px;
+      font-weight: 600;
+      color: #3b2a20;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .cores-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .cor-btn {
+      height: 50px;
+      border: 3px solid #e0e0e0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-size: 12px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+    }
+
+    .cor-btn:hover {
+      border-color: #c4707a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .cor-btn.selected {
+      border-color: #c4707a;
+      box-shadow: 0 0 0 3px rgba(196, 112, 122, 0.2);
+    }
+
+    .presets-buttons {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .preset-btn {
+      height: 45px;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      background: white;
+      font-size: 11px;
+      font-weight: 600;
+      color: #3b2a20;
+    }
+
+    .preset-btn:hover {
+      border-color: #c4707a;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    .detalhes-checks {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .check-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid #e0e0e0;
+      border-radius: 6px;
+      cursor: pointer;
+      background: #fafafa;
+      transition: all 0.3s;
+      font-size: 12px;
+    }
+
+    .check-item:hover {
+      background: #f5f5f5;
+      border-color: #c4707a;
+    }
+
+    .check-item input {
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+      accent-color: #c4707a;
+    }
+
+    .resumo-box {
+      background: linear-gradient(135deg, #f5f0eb 0%, #ede6dc 100%);
+      border-left: 4px solid #c4707a;
+    }
+
+    .resumo-info {
+      margin-bottom: 16px;
+      font-size: 13px;
+      color: #3b2a20;
+    }
+
+    .resumo-info p {
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    .preco-final {
+      font-size: 20px;
+      font-weight: 700;
+      color: #c4707a;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-cart-large {
+      width: 100%;
+      background: #c4707a;
+      color: white;
+      border: none;
+      padding: 14px;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 12px;
+    }
+
+    .btn-cart-large:hover {
+      background: #b25c5d;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(196, 112, 122, 0.3);
+    }
+
+    .btn-reset-monte {
+      width: 100%;
+      background: transparent;
+      color: #c4707a;
+      border: 2px solid #c4707a;
+      padding: 12px;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-top: 8px;
+    }
+
+    .btn-reset-monte:hover {
+      background: #c4707a;
+      color: white;
+    }
+
     /* RESPONSIVE */
     @media (max-width: 900px) {
       .config-grid {
@@ -1959,42 +2219,96 @@
   </div>
 </div>
 
-<!-- CONFIGURATOR -->
+<!-- CONFIGURATOR - MONTE SUA BOLSA -->
 <div class="container">
-  <section id="configurator" class="configurator coming-soon">
-    <div class="coming-soon-overlay">
-      <div class="coming-soon-text">Em Construção</div>
-      <div class="coming-soon-sub">Esta seção será em breve disponibilizada</div>
-    </div>
-    <h2>Monte sua bolsa</h2>
-    <p>Escolha o modelo e as cores que combinam com você. Veja o resumo de compra.</p>
+  <section id="configurator" class="configurator monte-bolsa-section">
+    <h2>🎨 Monte Sua Bolsa</h2>
+    <p class="section-subtitle">Combine suas cores favoritas e personalize</p>
 
-    <div class="config-grid">
+    <div class="monte-grid">
       <!-- PREVIEW -->
-      <div class="preview-panel">
-        <div class="preview-visual">
-          <div style="font-size: 48px; opacity: 0.4;">👜</div>
+      <div class="monte-preview">
+        <div class="preview-label">Seu Preview</div>
+        
+        <div class="cores-preview">
+          <div class="cor-preview" id="cor1PreviewSmall" style="background-color: #ff8c00;">1</div>
+          <span class="plus-sign">+</span>
+          <div class="cor-preview" id="cor2PreviewSmall" style="background-color: #ffffff;">2</div>
         </div>
-        <div class="preview-model" id="preview-model">Tote Clássica</div>
-        <div class="preview-colors" id="preview-colors">Preto + Branco</div>
-        <div class="preview-price" id="preview-price">R$ 189,00</div>
+
+        <div class="bolsa-preview-area">
+          <img id="bolsaPreviewImg" src="modelo-teste-01-frente-laranja.jpg" alt="Sua bolsa" class="preview-image">
+        </div>
       </div>
 
-      <!-- CONTROLS -->
-      <div class="config-controls">
-        <div class="control-section">
-          <div class="control-label">1. Escolha o modelo</div>
-          <div class="models-group" id="models"></div>
+      <!-- CONTROLES -->
+      <div class="monte-controls">
+        <!-- COR 1 -->
+        <div class="config-box">
+          <h3>Cor 1 (Principal)</h3>
+          <div class="cores-buttons">
+            <button class="cor-btn selected" onclick="monte_selecionarCor1('#ff8c00', 'Laranja')" style="background: #ff8c00; color: white;">Laranja</button>
+            <button class="cor-btn" onclick="monte_selecionarCor1('#c41e3a', 'Vermelho')" style="background: #c41e3a; color: white;">Vermelho</button>
+            <button class="cor-btn" onclick="monte_selecionarCor1('#000000', 'Preto')" style="background: #000000; color: white;">Preto</button>
+            <button class="cor-btn" onclick="monte_selecionarCor1('#d4af8f', 'Bege')" style="background: #d4af8f; color: white;">Bege</button>
+          </div>
         </div>
 
-        <div class="control-section">
-          <div class="control-label">2. Escolha a combinação de cores</div>
-          <div class="colors-group" id="colors"></div>
+        <!-- COR 2 -->
+        <div class="config-box">
+          <h3>Cor 2 (Secundária)</h3>
+          <div class="cores-buttons">
+            <button class="cor-btn selected" onclick="monte_selecionarCor2('#ffffff', 'Branco')" style="background: #ffffff; color: #333; border: 2px solid #e0e0e0;">Branco</button>
+            <button class="cor-btn" onclick="monte_selecionarCor2('#ff8c00', 'Laranja')" style="background: #ff8c00; color: white;">Laranja</button>
+            <button class="cor-btn" onclick="monte_selecionarCor2('#c41e3a', 'Vermelho')" style="background: #c41e3a; color: white;">Vermelho</button>
+            <button class="cor-btn" onclick="monte_selecionarCor2('#d4af8f', 'Bege')" style="background: #d4af8f; color: white;">Bege</button>
+          </div>
         </div>
 
-        <div class="action-btns">
-          <button class="btn-cart" onclick="addToCart()">Adicionar ao carrinho</button>
-          <a href="#" class="btn-whatsapp" id="whatsapp">WhatsApp</a>
+        <!-- PRESETS -->
+        <div class="config-box">
+          <h3>Combinações Populares</h3>
+          <div class="presets-buttons">
+            <button class="preset-btn" onclick="monte_preset('#ffffff', '#ff8c00', 'Branco', 'Laranja')">Branco + Laranja</button>
+            <button class="preset-btn" onclick="monte_preset('#ffffff', '#c41e3a', 'Branco', 'Vermelho')">Branco + Vermelho</button>
+            <button class="preset-btn" onclick="monte_preset('#000000', '#ffffff', 'Preto', 'Branco')">Preto + Branco</button>
+            <button class="preset-btn" onclick="monte_preset('#d4af8f', '#ffffff', 'Bege', 'Branco')">Bege + Branco</button>
+          </div>
+        </div>
+
+        <!-- DETALHES -->
+        <div class="config-box">
+          <h3>Detalhes</h3>
+          <div class="detalhes-checks">
+            <label class="check-item">
+              <input type="checkbox" id="monte_detailBolsinha" checked onchange="monte_atualizar()">
+              <span>Bolsinha Interna (+R$ 20)</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="monte_detailTassel" checked onchange="monte_atualizar()">
+              <span>Tassel/Franja (+R$ 15)</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="monte_detailCordao" checked onchange="monte_atualizar()">
+              <span>Cordão de Fechamento (+R$ 10)</span>
+            </label>
+            <label class="check-item">
+              <input type="checkbox" id="monte_detailRevestimento" checked onchange="monte_atualizar()">
+              <span>Revestimento Interno (+R$ 25)</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- RESUMO E PREÇO -->
+        <div class="config-box resumo-box">
+          <h3>Sua Criação</h3>
+          <div class="resumo-info">
+            <p><strong>Cores:</strong> <span id="monte_resumoNomes">Laranja + Branco</span></p>
+            <p><strong>Detalhes:</strong> <span id="monte_resumoDetalhes">Completo</span></p>
+            <div class="preco-final">R$ <span id="monte_precoFinal">249,00</span></div>
+          </div>
+          <button class="btn-cart-large" onclick="monte_addCarrinho()">🛍️ Adicionar ao Carrinho</button>
+          <button class="btn-reset-monte" onclick="monte_resetar()">↻ Limpar</button>
         </div>
       </div>
     </div>
@@ -3139,6 +3453,116 @@
       "'": '&#039;'
     };
     return text.replace(/[&<>"']/g, m => map[m]);
+  }
+
+  // MONTE SUA BOLSA - JAVASCRIPT
+  let monte_cor1 = '#ff8c00';
+  let monte_cor2 = '#ffffff';
+  let monte_cor1Nome = 'Laranja';
+  let monte_cor2Nome = 'Branco';
+
+  function monte_selecionarCor1(cor, nome) {
+    monte_cor1 = cor;
+    monte_cor1Nome = nome;
+    
+    document.querySelectorAll('.config-box:nth-child(1) .cor-btn').forEach(btn => {
+      btn.classList.remove('selected');
+    });
+    event.target.closest('.cor-btn').classList.add('selected');
+    
+    monte_atualizar();
+  }
+
+  function monte_selecionarCor2(cor, nome) {
+    monte_cor2 = cor;
+    monte_cor2Nome = nome;
+    
+    document.querySelectorAll('.config-box:nth-child(2) .cor-btn').forEach(btn => {
+      btn.classList.remove('selected');
+    });
+    event.target.closest('.cor-btn').classList.add('selected');
+    
+    monte_atualizar();
+  }
+
+  function monte_preset(c1, c2, n1, n2) {
+    monte_cor1 = c1;
+    monte_cor2 = c2;
+    monte_cor1Nome = n1;
+    monte_cor2Nome = n2;
+    
+    document.querySelectorAll('.cor-btn').forEach(btn => {
+      btn.classList.remove('selected');
+    });
+    
+    monte_atualizar();
+  }
+
+  function monte_atualizar() {
+    document.getElementById('cor1PreviewSmall').style.backgroundColor = monte_cor1;
+    document.getElementById('cor2PreviewSmall').style.backgroundColor = monte_cor2;
+    document.getElementById('monte_resumoNomes').textContent = `${monte_cor1Nome} + ${monte_cor2Nome}`;
+    
+    monte_atualizarPreco();
+  }
+
+  function monte_atualizarPreco() {
+    let detalhes = [];
+    let preco = 169;
+    
+    if (document.getElementById('monte_detailBolsinha').checked) {
+      detalhes.push('Bolsinha');
+      preco += 20;
+    }
+    if (document.getElementById('monte_detailTassel').checked) {
+      detalhes.push('Tassel');
+      preco += 15;
+    }
+    if (document.getElementById('monte_detailCordao').checked) {
+      detalhes.push('Cordão');
+      preco += 10;
+    }
+    if (document.getElementById('monte_detailRevestimento').checked) {
+      detalhes.push('Revestimento');
+      preco += 25;
+    }
+    
+    document.getElementById('monte_resumoDetalhes').textContent = detalhes.length > 0 ? detalhes.join(' + ') : 'Básico';
+    document.getElementById('monte_precoFinal').textContent = preco.toLocaleString('pt-BR', { minimumFractionDigits: 2 });
+  }
+
+  function monte_resetar() {
+    monte_preset('#ff8c00', '#ffffff', 'Laranja', 'Branco');
+    document.getElementById('monte_detailBolsinha').checked = true;
+    document.getElementById('monte_detailTassel').checked = true;
+    document.getElementById('monte_detailCordao').checked = true;
+    document.getElementById('monte_detailRevestimento').checked = true;
+    monte_atualizarPreco();
+  }
+
+  function monte_addCarrinho() {
+    const descricao = `Monte sua Bolsa: ${monte_cor1Nome} + ${monte_cor2Nome}`;
+    const preco = parseFloat(document.getElementById('monte_precoFinal').textContent.replace(',', '.'));
+    
+    addProductToCart({
+      id: 'monte-bolsa-' + Date.now(),
+      name: descricao,
+      price: preco,
+      image: 'modelo-teste-01-frente-laranja.jpg',
+      quantity: 1
+    });
+    
+    alert('✅ Bolsa adicionada ao carrinho! 🛍️');
+    monte_resetar();
+  }
+
+  // Inicializar Monte sua Bolsa
+  if (document.getElementById('monte_detailBolsinha')) {
+    document.getElementById('monte_detailBolsinha').addEventListener('change', monte_atualizarPreco);
+    document.getElementById('monte_detailTassel').addEventListener('change', monte_atualizarPreco);
+    document.getElementById('monte_detailCordao').addEventListener('change', monte_atualizarPreco);
+    document.getElementById('monte_detailRevestimento').addEventListener('change', monte_atualizarPreco);
+    monte_atualizar();
   }
 
   // INICIALIZAR

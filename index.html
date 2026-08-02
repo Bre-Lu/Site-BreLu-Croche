@@ -1706,13 +1706,7 @@
       max-height: 90%;
       object-fit: contain;
       filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.1));
-    }
-
-    #bolsaCanvas {
-      max-width: 100%;
-      height: auto;
-      display: block;
-      margin: 0 auto;
+      transition: filter 0.3s ease;
     }
 
     .monte-controls {
@@ -2244,8 +2238,7 @@
         </div>
 
         <div class="bolsa-preview-area">
-          <canvas id="bolsaCanvas" style="max-width: 90%; max-height: 90%; display: block; margin: 0 auto;"></canvas>
-          <img id="bolsaPreviewImg" src="modelo-teste-01-frente-laranja.jpg" alt="Sua bolsa" class="preview-image" style="display: none;">
+          <img id="bolsaPreviewImg" src="modelo-teste-01-frente-laranja.jpg" alt="Sua bolsa" class="preview-image">
         </div>
       </div>
 
@@ -2590,6 +2583,14 @@
   let monte_cor2 = '#ffffff';
   let monte_cor1Nome = 'Laranja';
   let monte_cor2Nome = 'Branco';
+
+  // TABELA DE FILTROS CSS PARA CADA COR
+  const FILTROS_COR = {
+    '#ff8c00': 'hue-rotate(0deg) saturate(1) brightness(0.95)',     // Laranja (original)
+    '#c41e3a': 'hue-rotate(-25deg) saturate(1.2) brightness(0.9)',  // Vermelho
+    '#000000': 'hue-rotate(0deg) saturate(0) brightness(0.5)',       // Preto
+    '#d4af8f': 'hue-rotate(25deg) saturate(0.8) brightness(1.05)'    // Bege
+  };
 
   // DADOS
   const products = [
@@ -3470,98 +3471,17 @@
   }
 
   // CORES ORIGINAIS DA BOLSA
-  const COR_LARANJA_ORIGINAL = { r: 255, g: 140, b: 0 }; // #ff8c00
-  const COR_BRANCO_ORIGINAL = { r: 255, g: 255, b: 255 }; // #ffffff
-  const TOLERANCIA = 50; // Tolerância para detecção de cor
-
-  // Função para converter hex para RGB
-  function hexToRgb(hex) {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return result ? {
-      r: parseInt(result[1], 16),
-      g: parseInt(result[2], 16),
-      b: parseInt(result[3], 16)
-    } : null;
-  }
-
-  // Função para detectar se uma cor é similar à cor original
-  function ehCorSimilar(r, g, b, corOriginal) {
-    const dr = Math.abs(r - corOriginal.r);
-    const dg = Math.abs(g - corOriginal.g);
-    const db = Math.abs(b - corOriginal.b);
-    return (dr + dg + db) < TOLERANCIA;
-  }
-
-  // Função para processar a imagem e substituir cores
-  function processarImagemComCores() {
+  // Função simplificada para aplicar filtro
+  function aplicarFiltroDesCores() {
     const img = document.getElementById('bolsaPreviewImg');
-    const canvas = document.getElementById('bolsaCanvas');
+    if (!img) return;
     
-    // Verificar se elementos existem
-    if (!canvas || !img) {
-      console.log('Canvas ou imagem não encontrados');
-      return;
-    }
+    // Usar o filtro da Cor 1 (que substitui o laranja)
+    const filtro = FILTROS_COR[monte_cor1] || 'hue-rotate(0deg)';
     
-    // Verificar se imagem está carregada
-    if (!img.complete || img.naturalWidth === 0) {
-      console.log('Imagem ainda não carregou. Tentando novamente em 100ms...');
-      setTimeout(processarImagemComCores, 100);
-      return;
-    }
+    img.style.filter = filtro;
     
-    try {
-      const ctx = canvas.getContext('2d');
-      if (!ctx) {
-        console.log('Não conseguiu obter contexto 2D do canvas');
-        return;
-      }
-      
-      // Definir tamanho do canvas
-      canvas.width = img.naturalWidth;
-      canvas.height = img.naturalHeight;
-      
-      // Desenhar imagem original no canvas
-      ctx.drawImage(img, 0, 0);
-      
-      // Pegar dados da imagem
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data = imageData.data;
-      
-      // Converter cores selecionadas de hex para RGB
-      const corNova1 = hexToRgb(monte_cor1);
-      const corNova2 = hexToRgb(monte_cor2);
-      
-      if (!corNova1 || !corNova2) {
-        console.log('Erro ao converter cores');
-        return;
-      }
-      
-      // Processar cada pixel
-      for (let i = 0; i < data.length; i += 4) {
-        const r = data[i];
-        const g = data[i + 1];
-        const b = data[i + 2];
-        
-        // Se o pixel é laranja, substituir por cor 1
-        if (ehCorSimilar(r, g, b, COR_LARANJA_ORIGINAL)) {
-          data[i] = corNova1.r;
-          data[i + 1] = corNova1.g;
-          data[i + 2] = corNova1.b;
-        }
-        // Se o pixel é branco, substituir por cor 2
-        else if (ehCorSimilar(r, g, b, COR_BRANCO_ORIGINAL)) {
-          data[i] = corNova2.r;
-          data[i + 1] = corNova2.g;
-          data[i + 2] = corNova2.b;
-        }
-      }
-      
-      // Colocar os dados processados de volta no canvas
-      ctx.putImageData(imageData, 0, 0);
-    } catch (error) {
-      console.log('Erro ao processar imagem:', error);
-    }
+    console.log(`Aplicando filtro: ${filtro} para cor: ${monte_cor1}`);
   }
 
   // MONTE SUA BOLSA - JAVASCRIPT
@@ -3624,8 +3544,8 @@
       resumoNomes.textContent = `${monte_cor1Nome} + ${monte_cor2Nome}`;
     }
     
-    // Processar a imagem com as novas cores
-    processarImagemComCores();
+    // Aplicar filtro CSS na imagem
+    aplicarFiltroDesCores();
     
     // Atualizar preço
     monte_atualizarPreco();
@@ -3719,6 +3639,8 @@
       return;
     }
     
+    console.log('Inicializando Monte sua Bolsa...');
+    
     // Configurar event listeners dos checkboxes
     checkboxBolsinha.addEventListener('change', monte_atualizarPreco);
     
@@ -3730,21 +3652,10 @@
     if (cordao) cordao.addEventListener('change', monte_atualizarPreco);
     if (revestimento) revestimento.addEventListener('change', monte_atualizarPreco);
     
-    // Carregar e processar a imagem
-    const imgElement = document.getElementById('bolsaPreviewImg');
-    if (imgElement) {
-      // Se imagem já está carregada, processar agora
-      if (imgElement.complete && imgElement.naturalWidth > 0) {
-        console.log('Imagem já carregada, processando...');
-        monte_atualizar();
-      } else {
-        // Senão, esperar o evento de carregamento
-        imgElement.onload = function() {
-          console.log('Imagem carregou, processando...');
-          monte_atualizar();
-        };
-      }
-    }
+    // Inicializar
+    monte_atualizar();
+    
+    console.log('Monte sua Bolsa inicializado com sucesso!');
   }
   
   // Chamar inicialização quando o DOM estiver pronto
